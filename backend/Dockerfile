@@ -6,7 +6,9 @@ COPY .mvn .mvn
 COPY pom.xml .
 COPY src src
 
-RUN chmod +x ./mvnw
+# Fix line endings and set execute permissions
+RUN sed -i 's/\r$//' mvnw && \
+    chmod +x ./mvnw
 RUN ./mvnw install -DskipTests
 
 FROM eclipse-temurin:17-jre-alpine
