@@ -25,7 +25,6 @@ const TalentProfilePage = () => {
                 <Button my="sm" onClick={()=>navigate(-1)} color="brightSun.4" leftSection={<IconArrowLeft size={20} />} variant="light">Back</Button>
             <div className="flex gap-5 lg-mx:flex-wrap">
                 <Profile />
-                <RecommendTalent talents={talents} />
             </div>
         </div>
     )

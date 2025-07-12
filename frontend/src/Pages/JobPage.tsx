@@ -29,7 +29,6 @@ const JobPage = () => {
         </Link>
         <div className="flex gap-5 justify-around bs-mx:flex-wrap">
             <Job {...job} />
-            <RecommendedJob />
         </div>
     </div>
 }
