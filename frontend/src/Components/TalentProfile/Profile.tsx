@@ -24,43 +24,42 @@ const Profile = () => {
         }).catch((err) => console.log(err))
         .finally(()=>dispatch(hideOverlay()));
     }, [id])
-    return <div data-aos="zoom-out" className="w-2/3 lg-mx:w-full">
-        <div className="" >
-            <div className="relative">
-
+    return <div data-aos="zoom-out" className="w-full flex justify-center">
+        <div className="w-2/3 lg-mx:w-full flex flex-col items-center ">
+            <div className="relative w-full flex flex-col items-center">
                 <img className="rounded-t-2xl xl-mx:h-40 w-full xs-mx:h-32 " src="/Profile/banner.jpg" alt="" />
-                <div className="absolute cursor-pointer flex items-center justify-center !rounded-full -bottom-1/3   md-mx:-bottom-10 sm-mx:-bottom-16  left-6">
-
-                    <Avatar className="!w-48  !h-48 md-mx:!w-40 md-mx:!h-40 border-mine-shaft-950 border-8  rounded-full sm-mx:!w-36 sm-mx:!h-36 xs-mx:!h-32 xs-mx:!w-32" src={profile?.picture ? `data:image/jpeg;base64,${profile?.picture}` : '/avatar.png'} alt="" />
+                <div className="absolute left-1/2 -translate-x-1/2 -bottom-24 md-mx:-bottom-10 sm-mx:-bottom-16 flex items-center justify-center !rounded-full mb-8">
+                    <Avatar className="!w-48 !h-48 md-mx:!w-40 md-mx:!h-40 border-mine-shaft-950 border-8 rounded-full sm-mx:!w-36 sm-mx:!h-36 xs-mx:!h-32 xs-mx:!w-32" src={profile?.picture ? `data:image/jpeg;base64,${profile?.picture}` : '/avatar.png'} alt="" />
                 </div>
-
             </div>
-            <div className="px-3 mt-16">
-                <div className="text-3xl xs-mx:text-2xl font-semibold flex justify-between">{profile?.name} <Button size={matches?"sm":"md"} color="brightSun.4" variant="light">Message</Button></div>
-                <div className="text-xl xs-mx:text-base flex gap-1 items-center"> <IconBriefcase className="h-5 w-5" stroke={1.5} />{profile?.jobTitle}  &bull; {profile?.company}</div>
-                <div className="text-lg flex xs-mx:text-base gap-1 items-center text-mine-shaft-300">
+            <div className="px-3 pt-40 w-full">
+                <div className="flex items-center justify-between mb-4">
+                    <span className="text-3xl xs-mx:text-2xl font-semibold">{profile?.name}</span>
+                    <Button size={matches?"sm":"md"} color="brightSun.4" variant="light">Message</Button>
+                </div>
+                <div className="text-xl xs-mx:text-base flex gap-1 items-center mb-1"> <IconBriefcase className="h-5 w-5" stroke={1.5} />{profile?.jobTitle}  &bull; {profile?.company}</div>
+                <div className="text-lg flex xs-mx:text-base gap-1 items-center text-mine-shaft-300 mb-1">
                     <IconMapPin className="h-5 w-5" stroke={1.5} /> {profile?.location}
                 </div>
-                <div className="text-lg xs-mx:text-base flex gap-1 items-center text-mine-shaft-300">
+                <div className="text-lg xs-mx:text-base flex gap-1 items-center text-mine-shaft-300 mb-1">
                     <IconBriefcase className="h-5 w-5" stroke={1.5} /> Experience: {profile?.totalExp} Years
                 </div>
                 <Divider my="xl" />
-                <div>
+                <div className="w-full">
                     <div className="text-2xl font-semibold mb-3">About</div>
                     <div className="text-sm text-mine-shaft-300 text-justify">{profile?.about}</div>
                 </div>
                 <Divider my="xl" />
-                <div>
+                <div className="w-full">
                     <div className="text-2xl font-semibold mb-3">Skills</div>
                     <div className="flex flex-wrap gap-2">
                         {
                             profile?.skills?.map((skill: any, index: any) => <div key={index} className="bg-bright-sun-300 rounded-3xl px-3 py-1 text-sm font-medium bg-opacity-15 text-bright-sun-400">{skill}</div>)
                         }
-
                     </div>
                 </div>
                 <Divider my="xl" />
-                <div>
+                <div className="w-full">
                     <div className="text-2xl font-semibold mb-4">Experience</div>
                     <div className="flex flex-col gap-8">
                         {
@@ -69,7 +68,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <Divider my="xl" />
-                <div>
+                <div className="w-full">
                     <div className="text-2xl font-semibold mb-4">Certifications</div>
                     <div className="flex flex-col gap-8">
                         {
@@ -78,7 +77,6 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 }
