@@ -56,15 +56,18 @@ const jobCategory = [
 const work = [
     {
         "name": "Build Your Resume",
-        "desc": "Create a standout resume with your skills."
+        "desc": "Create a standout resume with your skills.",
+        img: "Build your resume.png"
     },
     {
         "name": "Apply for Job",
-        "desc": "Find and apply for jobs that match your skills."
+        "desc": "Find and apply for jobs that match your skills.",
+        img: "Apply for job.png"
     },
     {
         "name": "Get Hired",
-        "desc": "Connect with employers and start your new job."
+        "desc": "Connect with employers and start your new job.",
+        img: "Get hired.png"
     }
 ]
 

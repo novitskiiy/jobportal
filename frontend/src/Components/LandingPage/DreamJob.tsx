@@ -17,8 +17,7 @@ const DreamJob = () => {
     return (
         <div className="flex sm-mx:flex-col-reverse  items-center px-16 bs-mx:px-10 md-mx:px-5">
             <div data-aos="zoom-out-right" className="flex flex-col w-[45%] sm-mx:w-full gap-3">
-                <div className="text-6xl bs-mx:text-5xl md-mx:text-4xl sm-mx:text-3xl font-bold leading-tight text-mine-shaft-100 [&>span]:text-bright-sun-400">Find your <span >dream</span> <span>job</span> with us</div>
-                <div className="text-lg md-mx:text-base sm-mx:text-sm text-mine-shaft-200">Good life begins with a good company. Start explore thousands of jobs in one place.</div>
+                <div className="text-6xl bs-mx:text-5xl md-mx:text-4xl sm-mx:text-3xl font-bold leading-tight text-mine-shaft-100 [&>span]:text-bright-sun-400">Find your <span >dream</span> <span>job</span></div>
                 <div className="flex gap-3 mt-5 items-center">
                     <TextInput value={jobTitle} onChange={(e)=>setJobTitle(e.currentTarget.value)} className="bg-mine-shaft-900 rounded-lg p-1 px-2 text-mine-shaft-100 [&_input]:!text-mine-shaft-100" variant="unstyled" label="Job Title" placeholder="Software Engineer" />
                     <TextInput value={type} onChange={(e)=>setType(e.currentTarget.value)} className="bg-mine-shaft-900 rounded-lg p-1 px-2 text-mine-shaft-100 [&_input]:!text-mine-shaft-100" variant="unstyled" label="Job Type" placeholder="Fulltime" />
