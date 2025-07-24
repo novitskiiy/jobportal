@@ -68,6 +68,13 @@ public class JobServiceImpl implements JobService {
 		applicants.add(applicantDTO.toEntity());
 		job.setApplicants(applicants);
 		jobRepository.save(job);
+		// Добавляем отправку уведомления employer-у через Kafka
+		NotificationDTO notiDto = new NotificationDTO();
+		notiDto.setAction("New Application");
+		notiDto.setMessage("New applicant " + applicantDTO.getName() + " has applied for your job: " + job.getJobTitle() + " at " + job.getCompany());
+		notiDto.setUserId(job.getPostedBy());
+		notiDto.setRoute("/posted-jobs/" + job.getId());
+		notificationService.sendNotification(notiDto);
 	}
 
 	@Override
@@ -98,7 +105,28 @@ public class JobServiceImpl implements JobService {
 					try {
 						notificationService.sendNotification(notiDto);
 					} catch (JobPortalException e) {
-						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else if(application.getApplicationStatus().equals(ApplicationStatus.OFFERED)) {
+					NotificationDTO notiDto=new NotificationDTO();
+					notiDto.setAction("Application Accepted");
+					notiDto.setMessage("Congratulations! You have been accepted for job id: "+application.getId());
+					notiDto.setUserId(application.getApplicantId());
+					notiDto.setRoute("/job-history");
+					try {
+						notificationService.sendNotification(notiDto);
+					} catch (JobPortalException e) {
+						e.printStackTrace();
+					}
+				} else if(application.getApplicationStatus().equals(ApplicationStatus.REJECTED)) {
+					NotificationDTO notiDto=new NotificationDTO();
+					notiDto.setAction("Application Rejected");
+					notiDto.setMessage("Unfortunately, you have been rejected for job id: "+application.getId());
+					notiDto.setUserId(application.getApplicantId());
+					notiDto.setRoute("/job-history");
+					try {
+						notificationService.sendNotification(notiDto);
+					} catch (JobPortalException e) {
 						e.printStackTrace();
 					}
 				}

@@ -23,6 +23,7 @@ services:
       - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/jobportal
     depends_on:
       - mongodb
+      - kafka
 
   frontend:
     build:
