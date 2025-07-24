@@ -138,4 +138,20 @@ public class JobServiceImpl implements JobService {
 		
 	}
 
+	@Override
+	public void deleteApplicantFromJob(Long jobId, Long applicantId) throws JobPortalException {
+		Job job = jobRepository.findById(jobId)
+			.orElseThrow(() -> new JobPortalException("JOB_NOT_FOUND"));
+		List<Applicant> applicants = job.getApplicants();
+		if (applicants == null || applicants.isEmpty()) {
+			throw new JobPortalException("NO_APPLICANTS_FOUND");
+		}
+		boolean removed = applicants.removeIf(applicant -> applicant.getApplicantId().equals(applicantId));
+		if (!removed) {
+			throw new JobPortalException("APPLICANT_NOT_FOUND");
+		}
+		job.setApplicants(applicants);
+		jobRepository.save(job);
+	}
+
 }

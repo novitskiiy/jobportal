@@ -56,6 +56,19 @@ const TalentCard = (props: any) => {
             </div>
             <IconHeart className="cursor-pointer text-mine-shaft-300" stroke={1.5} />
         </div>
+        {/* Кнопка Delete для вкладки Rejected */}
+        {props.onDelete && (
+            <Button
+                color="red"
+                variant="filled"
+                size="xs"
+                className="self-end"
+                style={{ marginTop: '-10px', marginBottom: '5px' }}
+                onClick={props.onDelete}
+            >
+                Delete
+            </Button>
+        )}
         <div className="flex gap-2 flex-wrap ">
             {
                 profile?.skills?.map((skill: any, index: any) => index<4 && <div key={index} className="p-2 py-1 bg-mine-shaft-800 text-bright-sun-400 rounded-lg text-xs">{skill}</div>)

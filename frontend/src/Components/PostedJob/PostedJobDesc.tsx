@@ -2,6 +2,8 @@ import { Badge, Divider, Tabs } from "@mantine/core";
 import Job from "../JobDesc/Job";
 import TalentCard from "../FindTalent/TalentCard";
 import { useEffect, useState } from "react";
+import { deleteApplicantFromJob } from '../../Services/JobService';
+import { errorNotification, successNotification } from '../../Services/NotificationService';
 
 const PostedJobDesc = (props:any) => {
     const [tab, setTab]=useState("overview");
@@ -45,7 +47,22 @@ const PostedJobDesc = (props:any) => {
                 </div></Tabs.Panel>
                 <Tabs.Panel value="rejected"><div className="flex mt-10 flex-wrap gap-5 justify-around">
                     {
-                         arr?.length?arr?.map((talent:any, index:any) =>  <TalentCard key={index} {...talent} offered/>):"No Applicants Rejected Yet"
+                         arr?.length?arr?.map((talent:any, index:any) =>  (
+                                <TalentCard
+                                    key={index}
+                                    {...talent}
+                                    offered
+                                    onDelete={async () => {
+                                        try {
+                                            await deleteApplicantFromJob(props.id, talent.applicantId);
+                                            successNotification('Удалено', 'Пользователь удалён из отклонённых');
+                                            setArr((prev:any) => prev.filter((a:any) => a.applicantId !== talent.applicantId));
+                                        } catch (err: any) {
+                                            errorNotification('Ошибка', err?.response?.data?.errorMessage || 'Ошибка удаления');
+                                        }
+                                    }}
+                                />
+                        )):"No Applicants Rejected Yet"
                     }
                 </div></Tabs.Panel>
                 
