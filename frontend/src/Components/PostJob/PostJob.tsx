@@ -100,7 +100,7 @@ const PostJob = () => {
             </div>
             <div className="flex gap-10 md-mx:gap-5 [&>*]:w-1/2 sm-mx:[&>*]:!w-full sm-mx:flex-wrap">
                 <SelectInput    form={form} name="location" {...select[4]} />
-                <NumberInput data-aos="zoom-out"  {...form.getInputProps("packageOffered")} withAsterisk label="Salary (LPA)" placeholder="Enter Salary" hideControls min={1} max={300} clampBehavior="strict" />
+                <NumberInput data-aos="zoom-out"  {...form.getInputProps("packageOffered")} withAsterisk label="Salary (K)" placeholder="Enter Salary" hideControls min={1} max={300} clampBehavior="strict" />
             </div>
             <TagsInput data-aos="zoom-out"  {...form.getInputProps("skillsRequired")} withAsterisk label="Skills" placeholder="Enter skill" splitChars={[',', ' ', '|']} clearable />
             <Textarea data-aos="zoom-out"  {...form.getInputProps("about")} withAsterisk className="my-3" label="About Job" autosize minRows={2} placeholder="Enter about job.." />
