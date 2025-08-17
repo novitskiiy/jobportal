@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,12 +36,14 @@ public class JobAPI {
 	private JobService jobService;
 	
 	@PostMapping("/post")
+	@PreAuthorize("hasRole('EMPLOYER')")
 	public ResponseEntity<JobDTO>postJob(@RequestBody @Valid JobDTO jobDTO) throws JobPortalException{
 		return new ResponseEntity<>(jobService.postJob(jobDTO), HttpStatus.CREATED);
 	}
 	
 	
 	@PostMapping("/postAll")
+	@PreAuthorize("hasRole('EMPLOYER')")
 	public ResponseEntity<List<JobDTO>>postAllJob(@RequestBody @Valid List<JobDTO> jobDTOs) throws JobPortalException{
 		
 		return new ResponseEntity<>(jobDTOs.stream().map((x)->{
@@ -55,34 +58,41 @@ public class JobAPI {
 	}
 	
 	@GetMapping("/getAll")
+	@PreAuthorize("hasRole('APPLICANT') or hasRole('EMPLOYER')")
 	public ResponseEntity<List<JobDTO>>getAllJobs() throws JobPortalException{
 		return new ResponseEntity<>(jobService.getAllJobs(), HttpStatus.OK);
 	}
 	@GetMapping("/get/{id}")
+	@PreAuthorize("hasRole('APPLICANT') or hasRole('EMPLOYER')")
 	public ResponseEntity<JobDTO>getJob(@PathVariable Long id) throws JobPortalException{
 		return new ResponseEntity<>(jobService.getJob(id), HttpStatus.OK);
 	}
 	@PostMapping("apply/{id}")
+	@PreAuthorize("hasRole('APPLICANT')")
 	public ResponseEntity<ResponseDTO>applyJob(@PathVariable Long id, @RequestBody ApplicantDTO applicantDTO) throws JobPortalException{
 		jobService.applyJob(id, applicantDTO);
 		return new ResponseEntity<>(new ResponseDTO("Applied Successfully"), HttpStatus.OK);
 	}
 	@GetMapping("/postedBy/{id}")
+	@PreAuthorize("hasRole('EMPLOYER')")
 	public ResponseEntity<List<JobDTO>>getJobsPostedBy(@PathVariable Long id) throws JobPortalException{
 		return new ResponseEntity<>(jobService.getJobsPostedBy(id), HttpStatus.OK);
 	}
 	
 	@GetMapping("/history/{id}/{applicationStatus}")
+	@PreAuthorize("hasRole('APPLICANT')")
 	public ResponseEntity<List<JobDTO>>getHistory(@PathVariable Long id,@PathVariable ApplicationStatus applicationStatus) throws JobPortalException{
 		return new ResponseEntity<>(jobService.getHistory(id, applicationStatus), HttpStatus.OK);
 	}
 	@PostMapping("/changeAppStatus")
+	@PreAuthorize("hasRole('EMPLOYER')")
 	public ResponseEntity<ResponseDTO>changeAppStatus(@RequestBody Application application) throws JobPortalException{
 		jobService.changeAppStatus(application);
 		return new ResponseEntity<>(new ResponseDTO("Status Chhanged Successfully"), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{jobId}/applicant/{applicantId}")
+	@PreAuthorize("hasRole('EMPLOYER')")
 	public ResponseEntity<ResponseDTO> deleteApplicantFromJob(@PathVariable Long jobId, @PathVariable Long applicantId) throws JobPortalException {
 		jobService.deleteApplicantFromJob(jobId, applicantId);
 		return new ResponseEntity<>(new ResponseDTO("Applicant deleted from job successfully"), HttpStatus.OK);

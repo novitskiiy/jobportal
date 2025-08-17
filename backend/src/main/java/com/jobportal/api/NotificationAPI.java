@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,10 +28,13 @@ public class NotificationAPI {
 	private NotificationService notificationService;
 	
 	@GetMapping("/get/{userId}")
+	@PreAuthorize("hasRole('APPLICANT') or hasRole('EMPLOYER')")
 	public ResponseEntity<List<Notification>>getNotifications(@PathVariable Long userId){
 		return new ResponseEntity<>(notificationService.getUnreadNotifications(userId), HttpStatus.OK);
 	}
+	
 	@PutMapping("/read/{id}")
+	@PreAuthorize("hasRole('APPLICANT') or hasRole('EMPLOYER')")
 	public ResponseEntity<ResponseDTO>readNotification(@PathVariable Long id) throws JobPortalException{
 		notificationService.readNotification(id);
 		return new ResponseEntity<>(new ResponseDTO("Success"), HttpStatus.OK);
