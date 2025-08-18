@@ -154,4 +154,34 @@ public class JobServiceImpl implements JobService {
 		jobRepository.save(job);
 	}
 
+	@Override
+	public void respondToOffer(Application application) throws JobPortalException {
+		Job job = jobRepository.findById(application.getId()).orElseThrow(() -> new JobPortalException("JOB_NOT_FOUND"));
+		List<Applicant> apps = job.getApplicants().stream().map((x) -> {
+			if (application.getApplicantId() == x.getApplicantId()) {
+				x.setApplicationStatus(application.getApplicationStatus());
+				
+				// Отправляем уведомление работодателю
+				NotificationDTO notiDto = new NotificationDTO();
+				if(application.getApplicationStatus().equals(ApplicationStatus.ACCEPTED)) {
+					notiDto.setAction("Offer Accepted");
+					notiDto.setMessage("Your offer for job: " + job.getJobTitle() + " has been accepted by the applicant");
+				} else if(application.getApplicationStatus().equals(ApplicationStatus.REJECTED)) {
+					notiDto.setAction("Offer Rejected");
+					notiDto.setMessage("Your offer for job: " + job.getJobTitle() + " has been rejected by the applicant");
+				}
+				notiDto.setUserId(job.getPostedBy());
+				notiDto.setRoute("/posted-jobs/" + job.getId());
+				try {
+					notificationService.sendNotification(notiDto);
+				} catch (JobPortalException e) {
+					e.printStackTrace();
+				}
+			}
+			return x;
+		}).toList();
+		job.setApplicants(apps);
+		jobRepository.save(job);
+	}
+
 }

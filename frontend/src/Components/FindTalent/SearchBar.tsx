@@ -1,5 +1,5 @@
 import { Button, Collapse, Divider, Input, RangeSlider } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MultiInput from "../FindJobs/MultiInput";
 import { searchFields } from "../../Data/TalentData";
 import { IconUserCircle } from "@tabler/icons-react";
@@ -11,8 +11,18 @@ const SearchBar = () => {
     const dispatch = useDispatch();
     const matches = useMediaQuery('(max-width: 475px)');
     const [opened, { toggle }] = useDisclosure(false);
-    const [value, setValue] = useState<[number, number]>([0, 50]);
-    const [name, setName] =  useState('');;
+    const [value, setValue] = useState<[number, number]>([0, 10]);
+    const [name, setName] =  useState('');
+    
+    const handleSliderChange = (newValue: [number, number]) => {
+        setValue(newValue);
+        // Отправляем в фильтр только при окончании движения
+    };
+    
+    const handleSliderEnd = (newValue: [number, number]) => {
+        dispatch(updateFilter({exp: newValue}));
+    };
+    
     const handleChange = (name:any, event:any) => {
         if(name=="exp"){
             dispatch(updateFilter({exp:event}));
@@ -47,9 +57,19 @@ const SearchBar = () => {
             <div className="w-1/5 lg-mx:w-1/4 lg-mx:mt-7 bs-mx:w-[30%]  sm-mx:w-[48%] xs-mx:w-full text-sm text-mine-shaft-300 [&_.mantine-Slider-label]:!translate-y-10 xs-mx:mb-1 ">
                 <div className="flex mb-1 justify-between">
                     <div>Experience (Year)</div>
-                    <div>{value[0]}  - {value[1]} </div>
+                    <div>{value[0]} - {value[1]}</div>
                 </div>
-                <RangeSlider color="brightSun.4" size="xs" value={value} onChange={setValue} onChangeEnd={(e)=>handleChange("exp", e)} />
+                <RangeSlider 
+                    color="brightSun.4" 
+                    size="xs" 
+                    value={value} 
+                    onChange={handleSliderChange} 
+                    onChangeEnd={handleSliderEnd}
+                    min={0}
+                    max={10}
+                    step={1}
+                    minRange={0}
+                />
             </div>
         </div>
         </Collapse>

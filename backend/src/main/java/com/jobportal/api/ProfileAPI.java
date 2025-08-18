@@ -41,6 +41,12 @@ public class ProfileAPI {
 		return new ResponseEntity<>(profileService.getAllProfiles(), HttpStatus.OK);
 	}
 	
+	@GetMapping("/getApplicants")
+	@PreAuthorize("hasRole('EMPLOYER')")
+	public ResponseEntity<List<ProfileDTO>>getApplicantProfiles() throws JobPortalException{
+		return new ResponseEntity<>(profileService.getApplicantProfiles(), HttpStatus.OK);
+	}
+	
 	@PutMapping("/update")
 	@PreAuthorize("hasRole('APPLICANT') or hasRole('EMPLOYER')")
 	public ResponseEntity<ProfileDTO>updateProfile(@RequestBody ProfileDTO profileDTO) throws JobPortalException{

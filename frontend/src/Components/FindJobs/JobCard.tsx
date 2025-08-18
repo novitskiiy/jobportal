@@ -1,7 +1,7 @@
 import { Button, Divider, Text } from "@mantine/core";
 import { IconBookmark, IconBookmarkFilled, IconClockHour3 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
-import { timeAgo } from "../../Services/Utilities";
+import { timeAgo, formatSalary } from "../../Services/Utilities";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../../Slices/ProfileSlice";
 
@@ -44,7 +44,7 @@ const JobCard = (props: any) => {
         </div>
         <Divider color="mineShaft.7" size="xs" />
         <div className="flex justify-between">
-            <div className="font-semibold text-mine-shaft-200">${props.packageOffered}</div>
+            <div className="font-semibold text-mine-shaft-200">{formatSalary(props.packageOffered)}</div>
             <div className="text-xs flex gap-1 items-center text-mine-shaft-400">
                 <IconClockHour3 className="h-5 w-5" stroke={1.5} />Posted {timeAgo(props.postTime)}
             </div>

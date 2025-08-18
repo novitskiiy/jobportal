@@ -28,6 +28,7 @@ public interface JobService {
 
 	public void deleteApplicantFromJob(Long jobId, Long applicantId) throws JobPortalException;
 	
+	public void respondToOffer(Application application) throws JobPortalException;
 	
 
 }

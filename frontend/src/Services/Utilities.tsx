@@ -69,4 +69,11 @@ const options: Intl.DateTimeFormatOptions = {
 return date.toLocaleString('en-US', options);
 }  
 
-  export {formatDate, timeAgo, getBase64, openPDF, formatInterviewTime};
+const formatSalary = (salary: number | string) => {
+  const numSalary = typeof salary === 'string' ? parseInt(salary) : salary;
+  // Поскольку в форме есть ограничение max={300} и метка "Salary (K)", 
+  // считаем, что все числа уже в тысячах
+  return `$${numSalary}K`;
+}
+
+  export {formatDate, timeAgo, getBase64, openPDF, formatInterviewTime, formatSalary};

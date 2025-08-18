@@ -47,7 +47,7 @@ const Jobs = () => {
         if(filter.Location && filter.Location.length>0)filtered=filtered.filter((job:any)=>filter.Location?.some((x:any)=>job.location?.toLowerCase().includes(x.toLowerCase())));
           if(filter.Experience && filter.Experience.length>0)filtered=filtered.filter((job:any)=>filter.Experience?.some((x:any)=>job.experience?.toLowerCase().includes(x.toLowerCase())));
           if(filter["Job Type"] && filter["Job Type"].length>0)filtered=filtered.filter((job:any)=>filter["Job Type"]?.some((x:any)=>job.jobType?.toLowerCase().includes(x.toLowerCase())));
-          if(filter.salary && filter.salary.length>0)filtered=filtered.filter((jobs:any)=>filter.salary[0]<=jobs.packageOffered && jobs.packageOffered<=filter.salary[1]);
+          if(filter.salary && Array.isArray(filter.salary) && filter.salary.length===2)filtered=filtered.filter((jobs:any)=>filter.salary[0]<=jobs.packageOffered && jobs.packageOffered<=filter.salary[1]);
         setFilteredJobs(filtered);
     },[filter,jobList])
     return <div className="px-5 py-5">

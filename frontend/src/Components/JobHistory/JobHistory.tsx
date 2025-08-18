@@ -49,6 +49,7 @@ setShowList(jobList.filter((job:any)=>profile?.savedJobs?.includes(job.id)));
                     <Tabs.Tab value="APPLIED">Applied</Tabs.Tab>
                     <Tabs.Tab value="SAVED"> Saved</Tabs.Tab>
                     <Tabs.Tab value="OFFERED">Offered</Tabs.Tab>
+                    <Tabs.Tab value="ACCEPTED">Accepted</Tabs.Tab>
                     <Tabs.Tab value="INTERVIEWING">In Progress</Tabs.Tab>
                 </Tabs.List>
                 <Tabs.Panel value={activeTab} className="[&>div]:w-full">

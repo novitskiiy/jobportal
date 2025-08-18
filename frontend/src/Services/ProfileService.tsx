@@ -15,4 +15,11 @@ const getAllProfiles = async ()=>{
         .then((result:any) => result.data)
         .catch((error:any) =>{throw error;});
 }
-export {getProfile, updateProfile, getAllProfiles};
+
+const getApplicantProfiles = async ()=>{
+    return axiosInstance.get(`/profiles/getApplicants`)
+        .then((result:any) => result.data)
+        .catch((error:any) =>{throw error;});
+}
+
+export {getProfile, updateProfile, getAllProfiles, getApplicantProfiles};

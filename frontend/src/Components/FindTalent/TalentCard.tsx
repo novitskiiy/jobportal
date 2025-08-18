@@ -90,16 +90,16 @@ const TalentCard = (props: any) => {
             </div>
         }
         <Divider color="mineShaft.7" size="xs" />
-        <div className="flex [&>*]:w-1/2 [&>*]:p-1">
+        <div className="flex [&>*]:p-1">
             {
                 !props.invited && <>
-                    <Link to={`/talent-profile/${profile?.id}`}>
+                    <Link to={`/talent-profile/${profile?.id}`} className="w-full">
                         <Button color="brightSun.4" variant="outline" fullWidth>Profile</Button>
                     </Link>
 
-                    <div>
-                        {props.posted ? <Button color="brightSun.4" variant="light" onClick={open} rightSection={<IconCalendarMonth className="w-5 h-5" />} fullWidth>Schedule</Button> : <Button color="brightSun.4" variant="light" fullWidth>Message</Button>}
-                    </div>
+                    {props.posted && <div className="w-full">
+                        <Button color="brightSun.4" variant="light" onClick={open} rightSection={<IconCalendarMonth className="w-5 h-5" />} fullWidth>Schedule</Button>
+                    </div>}
                 </>
             }{
 
