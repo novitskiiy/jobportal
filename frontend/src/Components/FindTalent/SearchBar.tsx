@@ -41,7 +41,7 @@ const SearchBar = () => {
         <Collapse in={(opened || !matches)}>
         <div className="px-5 py-8 lg-mx:!flex-wrap items-center !text-mine-shaft-100 flex ">
             <div className="w-1/5 lg-mx:w-1/4 bs-mx:w-[30%] sm-mx:w-[48%] xs-mx:w-full xs-mx:mb-1 flex items-center ">
-                <div className="bg-mine-shaft-900 rounded-full mr-2 text-bright-sun-400 p-1"><IconUserCircle size={20} /> </div>
+                <div className="bg-mine-shaft-900 rounded-full mr-2 text-ocean-blue-400 p-1"><IconUserCircle size={20} /> </div>
                 <Input defaultValue={name} onChange={(e)=>handleChange("name",e)} className="[&_input]:!placeholder-mine-shaft-300" variant="unstyled" placeholder="Talent Name" />
             </div>
             <Divider className="sm-mx:hidden"  mr="xs" size="xs" orientation="vertical" />

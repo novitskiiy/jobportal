@@ -35,7 +35,7 @@ const Skills=()=>{
     {edit ? <TagsInput data-aos="zoom-out"  placeholder="Add skill" value={skills} onChange={setSkills} splitChars={[',', ' ', '|']} />
         : <div className="flex flex-wrap gap-2">
             {
-                profile?.skills?.map((skill:any, index:number) => <div key={index} className="bg-bright-sun-300 rounded-3xl px-3 py-1 text-sm font-medium bg-opacity-15 text-bright-sun-400">{skill}</div>)
+                profile?.skills?.map((skill:any, index:number) => <div key={index} className="bg-ocean-blue-300 rounded-3xl px-3 py-1 text-sm font-medium bg-opacity-15 text-ocean-blue-400">{skill}</div>)
             }
         </div>}
 

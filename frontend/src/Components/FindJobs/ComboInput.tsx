@@ -53,7 +53,7 @@ const ComboInput=()=> {
         <InputBase
         size='md'
         variant='unstyled'
-        leftSection={<div className="bg-mine-shaft-900 rounded-full mr-2 text-bright-sun-400 p-1"><IconSearch size={20} /> </div>}
+                        leftSection={<div className="bg-mine-shaft-900 rounded-full mr-2 text-ocean-blue-400 p-1"><IconSearch size={20} /> </div>}
           rightSection={<IconSelector />}
           value={search}
           onChange={(event) => {

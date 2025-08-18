@@ -43,7 +43,7 @@ const Card = (props: any) => {
             errorNotification("Error", err.response?.data?.errorMessage || "Failed to respond to offer");
         }
     }
-    return <div data-aos="zoom-out" className="p-4 rounded-xl bg-mine-shaft-900   hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400  transition duration-300 ease-in-out w-72 flex flex-col gap-3">
+    return <div data-aos="zoom-out" className="p-4 rounded-xl bg-mine-shaft-900   hover:shadow-[0_0_5px_1px_#3b82f6] !shadow-ocean-blue-400  transition duration-300 ease-in-out w-72 flex flex-col gap-3">
         <div className="flex justify-between">
             <div className="flex gap-2 items-center">
                 <div className="p-2 bg-mine-shaft-800 rounded-md">
@@ -54,12 +54,12 @@ const Card = (props: any) => {
                     <div className="text-xs text-mine-shaft-300"><Link className="hover:text-mine-shaft-200" to="/company">{props.company}</Link> &bull; {props.applicants?props.applicants.length:0} Applicants</div>
                 </div>
             </div>
-            {profile.savedJobs?.includes(props.id) ? <IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer text-bright-sun-400 " stroke={1.5} /> : <IconBookmark onClick={handleSaveJob} className="cursor-pointer text-mine-shaft-300" stroke={1.5} />}
+            {profile.savedJobs?.includes(props.id) ? <IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer text-ocean-blue-400 " stroke={1.5} /> : <IconBookmark onClick={handleSaveJob} className="cursor-pointer text-mine-shaft-300" stroke={1.5} />}
         </div>
         <div className="flex gap-2">
-            <div className="p-2 py-1 bg-mine-shaft-800 text-bright-sun-400 rounded-lg text-xs">{props.experience}</div>
-            <div className="p-2 py-1  bg-mine-shaft-800 text-bright-sun-400 rounded-lg text-xs">{props.jobType}</div>
-            <div className="p-2 py-1  bg-mine-shaft-800 text-bright-sun-400 rounded-lg text-xs">{props.location}</div>
+            <div className="p-2 py-1 bg-mine-shaft-800 text-ocean-blue-400 rounded-lg text-xs">{props.experience}</div>
+            <div className="p-2 py-1  bg-mine-shaft-800 text-ocean-blue-400 rounded-lg text-xs">{props.jobType}</div>
+            <div className="p-2 py-1  bg-mine-shaft-800 text-ocean-blue-400 rounded-lg text-xs">{props.location}</div>
         </div>
         <div>
             <Text className="!text-xs text-justify !text-mine-shaft-300" lineClamp={3}>{props.about}
@@ -85,7 +85,7 @@ const Card = (props: any) => {
         </div>
         }
         {props.interviewing &&<div className="flex gap-1 text-sm">
-        <IconCalendarMonth className=" text-bright-sun-400 w-5 h-5" stroke={1.5} /> Sun, 25 August &bull; <span className="text-mine-shaft-400">10 AM - 11 AM</span>
+                        <IconCalendarMonth className=" text-ocean-blue-400 w-5 h-5" stroke={1.5} /> Sun, 25 August &bull; <span className="text-mine-shaft-400">10 AM - 11 AM</span>
         </div>}
         <Link  to={`/jobs/${props.id}`}>
         <Button color="brightSun.4" variant="light" fullWidth>View Job</Button>

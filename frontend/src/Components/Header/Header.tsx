@@ -1,5 +1,5 @@
 import { Avatar, Burger, Button, Drawer, Indicator } from "@mantine/core";
-import { IconAnchor, IconAsset, IconBell, IconSettings, IconX } from "@tabler/icons-react";
+import { IconBriefcase, IconAsset, IconBell, IconSettings, IconX } from "@tabler/icons-react";
 import NavLinks from "./NavLinks";
 import ProfileMenu from "./ProfileMenu";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -78,14 +78,14 @@ const Header = () => {
 
     return (
         <div data-aos="zoom-out" className="w-full bg-mine-shaft-950 px-6 text-white h-20 flex justify-between items-center font-['poppins']">
-            <div onClick={() => navigate("/")} className="flex gap-1 cursor-pointer items-center text-bright-sun-400">
-                <IconAnchor className="h-8 w-8" stroke={2.5} />
-                <div className=" xs-mx:hidden text-3xl font-semibold">JobHook</div>
+            <div onClick={() => navigate("/")} className="flex gap-1 cursor-pointer items-center text-ocean-blue-400">
+                <IconBriefcase className="h-8 w-8" stroke={2.5} />
+                <div className=" xs-mx:hidden text-3xl font-semibold">JobPortal</div>
             </div>
             <NavLinks />
             <div className="flex gap-3 items-center">
 
-                {user ? <ProfileMenu /> : <Link to="/login" className="text-mine-shaft-200 hover:text-bright-sun-400 "><Button color="brightSun.4" variant="subtle">Login</Button></Link>}
+                {user ? <ProfileMenu /> : <Link to="/login" className="text-mine-shaft-200 hover:text-ocean-blue-400 "><Button color="oceanBlue.4" variant="subtle">Login</Button></Link>}
                 {/* <div className=" bg-mine-shaft-900 p-1.5 rounded-full">
                     <IconSettings stroke={1.5} />
                 </div> */}
@@ -101,7 +101,7 @@ const Header = () => {
 
                         {
                             mobileLinks.map((link, index) => <div key={index} className=" h-full flex items-center">
-                                <div className="hover:text-bright-sun-400 text-xl " key={index} onClick={() => handleClick(link.url)} >{link.name}</div>
+                                <div className="hover:text-ocean-blue-400 text-xl " key={index} onClick={() => handleClick(link.url)} >{link.name}</div>
                             </div>)
                         }
                     </div>

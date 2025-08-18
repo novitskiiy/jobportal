@@ -104,7 +104,7 @@ const PostJob = () => {
             </div>
             <TagsInput data-aos="zoom-out"  {...form.getInputProps("skillsRequired")} withAsterisk label="Skills" placeholder="Enter skill" splitChars={[',', ' ', '|']} clearable />
             <Textarea data-aos="zoom-out"  {...form.getInputProps("about")} withAsterisk className="my-3" label="About Job" autosize minRows={2} placeholder="Enter about job.." />
-            <div className="[&_button[data-active='true']]:!text-bright-sun-400 [&_button[data-active='true']]:!bg-bright-sun-400/20">
+            <div className="[&_button[data-active='true']]:!text-ocean-blue-400 [&_button[data-active='true']]:!bg-ocean-blue-400/20">
                 <div className="text-sm font-medium ">Job Description<span className="text-red-600 "> *</span></div>
                 <TextEditor data-aos="zoom-out"  form={form} data={editorData}/>
             </div>
