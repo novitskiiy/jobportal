@@ -4,7 +4,7 @@ import { IconBookmark, IconBookmarkFilled } from "@tabler/icons-react";
 // @ts-ignore
 import DOMPurify from 'dompurify';
 import { Link} from "react-router-dom";
-import { timeAgo } from "../../Services/Utilities";
+import { timeAgo, formatSalary } from "../../Services/Utilities";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { changeProfile } from "../../Slices/ProfileSlice";
@@ -68,7 +68,7 @@ const Job = (props:any) => {
                 card.map((item, index) => <div key={index} className="flex flex-col text-sm gap-1 items-center ">
                     <ActionIcon className="!h-12 !w-12 xs-mx:!h-8 xs-mx:!w-8" variant="light" color="brightSun.4" radius="xl" ><item.icon className="h-4/5 w-4/5" /></ActionIcon>
                     <div className="text-mine-shaft-300 xs-mx:text-sm">{item.name}</div>
-                    <div className="text-base font-semibold xs-mx:text-sm">{props ? props[item.id]:"NA"}</div>
+                    <div className="text-base font-semibold xs-mx:text-sm">{item.id === "packageOffered" ? formatSalary(props[item.id]) : (props ? props[item.id] : "NA")}</div>
                 </div>)}
         </div>
         <Divider size="xs" my="xl" />
@@ -86,18 +86,14 @@ const Job = (props:any) => {
         <Divider size="xs" my="xl" />
         <div>
             <div className="text-xl font-semibold mb-5">About Company</div>
-            <div className="flex items-center justify-between mb-3 xs-mx:flex-wrap xs-mx:gap-2">
-                <div className="flex items-center gap-2">
-                    <div className="p-3 bg-mine-shaft-800 rounded-xl flex ">
-                        <img className="h-8" src={`/Icons/${props.company}.png`} alt="" />
-                    </div>
-                    <div>
-                        <div className="text-lg font-medium">{props.company}</div>
-                        <div className="text-mine-shaft-300">10k+ Employees</div>
-                    </div>
+            <div className="flex items-center gap-2 mb-3">
+                <div className="p-3 bg-mine-shaft-800 rounded-xl flex ">
+                    <img className="h-8" src={`/Icons/${props.company}.png`} alt="" />
                 </div>
-                <Link to={`/company/${props.company}`}>
-                    <Button color="brightSun.4" variant="light">Company Page</Button></Link>
+                <div>
+                    <div className="text-lg font-medium">{props.company}</div>
+                    <div className="text-mine-shaft-300">10k+ Employees</div>
+                </div>
             </div>
             <div className="text-mine-shaft-300 text-justify xs-mx:text-sm">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo fuga recusandae perferendis, excepturi nostrum debitis. Accusantium dolorum corrupti et mollitia unde? Possimus vero nemo maxime vitae impedit? Nisi, quos in. Facilis maiores in nostrum qui animi delectus architecto iste quidem soluta. Illo aspernatur saepe dolores minus soluta? Molestias, delectus eveniet.</div>
         </div>

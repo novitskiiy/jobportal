@@ -91,6 +91,13 @@ public class JobAPI {
 		return new ResponseEntity<>(new ResponseDTO("Status Chhanged Successfully"), HttpStatus.OK);
 	}
 	
+	@PostMapping("/respondToOffer")
+	@PreAuthorize("hasRole('APPLICANT')")
+	public ResponseEntity<ResponseDTO>respondToOffer(@RequestBody Application application) throws JobPortalException{
+		jobService.respondToOffer(application);
+		return new ResponseEntity<>(new ResponseDTO("Response sent successfully"), HttpStatus.OK);
+	}
+	
 	@DeleteMapping("/{jobId}/applicant/{applicantId}")
 	@PreAuthorize("hasRole('EMPLOYER')")
 	public ResponseEntity<ResponseDTO> deleteApplicantFromJob(@PathVariable Long jobId, @PathVariable Long applicantId) throws JobPortalException {

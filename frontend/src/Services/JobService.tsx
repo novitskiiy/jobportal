@@ -40,4 +40,11 @@ const deleteApplicantFromJob = async (jobId: any, applicantId: any) => {
         .then((result: { data: any }) => result.data)
         .catch((error: unknown) => { throw error; });
 }
-export {postJob, getAllJobs, getJob, applyJob, getHistory, getJobsPostedBy, changeAppStatus, deleteApplicantFromJob};
+
+const respondToOffer = async (application: any) => {
+    return axiosInstance.post(`/jobs/respondToOffer`, application)
+        .then((result: { data: any }) => result.data)
+        .catch((error: unknown) => { throw error; });
+}
+
+export {postJob, getAllJobs, getJob, applyJob, getHistory, getJobsPostedBy, changeAppStatus, deleteApplicantFromJob, respondToOffer};

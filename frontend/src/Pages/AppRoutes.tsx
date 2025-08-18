@@ -7,7 +7,7 @@ import JobPage from './JobPage';
 import ApplyJobPage from './ApplyJobPage';
 import FindTalentPage from './FindTalentPage';
 import TalentProfilePage from './TalentProfilePage';
-import CompanyPage from './CompanyPage';
+
 import JobHistoryPage from './JobHistoryPage';
 import PostedJobPage from './PostedJobPage';
 import PostJobPage from './PostJobPage';
@@ -45,7 +45,7 @@ const AppRoutes = () => {
         <Route path='/apply-job/:id' element={<ProtectedRoute allowedRoles={['APPLICANT']}><ApplyJobPage /></ProtectedRoute>} />
         <Route path='/find-talent' element={<ProtectedRoute allowedRoles={['EMPLOYER']}><FindTalentPage /></ProtectedRoute>} />
         <Route path='/talent-profile/:id' element={<ProtectedRoute allowedRoles={['EMPLOYER']}><TalentProfilePage /></ProtectedRoute>} />
-        <Route path='/company/:name' element={<ProtectedRoute allowedRoles={['APPLICANT']}><CompanyPage /></ProtectedRoute>} />
+
         <Route path='/job-history' element={<ProtectedRoute allowedRoles={['APPLICANT']}><JobHistoryPage /></ProtectedRoute>} />
         <Route path='/posted-jobs/:id' element={<ProtectedRoute allowedRoles={['EMPLOYER']}><PostedJobPage /></ProtectedRoute>} />
         <Route path='/post-job/:id' element={<ProtectedRoute allowedRoles={['EMPLOYER']}><PostJobPage /></ProtectedRoute>} />

@@ -2,13 +2,17 @@ import { Button, Divider, Text } from "@mantine/core";
 import { IconBookmark, IconBookmarkFilled, IconCalendarMonth, IconClockHour3 } from "@tabler/icons-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { timeAgo } from "../../Services/Utilities";
+import { timeAgo, formatSalary } from "../../Services/Utilities";
 import { useEffect } from "react";
 import { changeProfile } from "../../Slices/ProfileSlice";
+import { respondToOffer } from "../../Services/JobService";
+import { successNotification, errorNotification } from "../../Services/NotificationService";
 
 const Card = (props: any) => {
     const dispatch=useDispatch();
     const profile=useSelector((state:any)=>state.profile);
+    const user=useSelector((state:any)=>state.user);
+    
     const handleSaveJob = () => {
         let savedJobs:any=[...profile.savedJobs];
         if(savedJobs.includes(props.id)){
@@ -18,6 +22,26 @@ const Card = (props: any) => {
         }
         let updatedProfile={...profile,savedJobs:savedJobs};
         dispatch(changeProfile(updatedProfile));
+    }
+    
+    const handleRespondToOffer = async (status: string) => {
+        try {
+            const application = {
+                id: props.id,
+                applicantId: user.id,
+                applicationStatus: status
+            };
+            await respondToOffer(application);
+            if(status === "ACCEPTED") {
+                successNotification("Offer Accepted", "You have successfully accepted the job offer!");
+            } else {
+                successNotification("Offer Rejected", "You have rejected the job offer.");
+            }
+            // Обновляем страницу для отображения изменений
+            window.location.reload();
+        } catch (err: any) {
+            errorNotification("Error", err.response?.data?.errorMessage || "Failed to respond to offer");
+        }
     }
     return <div data-aos="zoom-out" className="p-4 rounded-xl bg-mine-shaft-900   hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400  transition duration-300 ease-in-out w-72 flex flex-col gap-3">
         <div className="flex justify-between">
@@ -43,16 +67,21 @@ const Card = (props: any) => {
         </div>
         <Divider color="mineShaft.7" size="xs" />
         <div className="flex justify-between">
-            <div className="font-semibold text-mine-shaft-200">${props.packageOffered}</div>
+            <div className="font-semibold text-mine-shaft-200">{formatSalary(props.packageOffered)}</div>
             <div className="text-xs flex gap-1 items-center text-mine-shaft-400">
-                <IconClockHour3 className="h-5 w-5" stroke={1.5} /> {props.applied || props.interviewing? "Applied" : props.offered ? "Interviewed" : "Posted"} {timeAgo(props.postTime)}
+                <IconClockHour3 className="h-5 w-5" stroke={1.5} /> {props.applied ? "Applied" : props.interviewing ? "Interviewed" : props.offered ? "Offered" : props.accepted ? "Accepted" : "Posted"} {timeAgo(props.postTime)}
             </div>
         </div>
-        {(props.offered || props.interviewing) && <Divider color="mineShaft.7" size="xs" />}
+        {(props.offered || props.interviewing || props.accepted) && <Divider color="mineShaft.7" size="xs" />}
         {props.offered &&
         <div className="flex gap-2">
-            <Button color="brightSun.4" variant="outline" fullWidth>Accept</Button>
-            <Button color="brightSun.4" variant="light" fullWidth>Reject</Button>
+            <Button color="brightSun.4" variant="outline" fullWidth onClick={() => handleRespondToOffer("ACCEPTED")}>Accept</Button>
+            <Button color="brightSun.4" variant="light" fullWidth onClick={() => handleRespondToOffer("REJECTED")}>Reject</Button>
+        </div>
+        }
+        {props.accepted &&
+        <div className="flex gap-1 text-sm items-center justify-center">
+            <div className="text-green-400 font-semibold">✓ Offer Accepted</div>
         </div>
         }
         {props.interviewing &&<div className="flex gap-1 text-sm">

@@ -35,7 +35,6 @@ const Profile = () => {
             <div className="px-3 pt-40 w-full">
                 <div className="flex items-center justify-between mb-4">
                     <span className="text-3xl xs-mx:text-2xl font-semibold">{profile?.name}</span>
-                    <Button size={matches?"sm":"md"} color="brightSun.4" variant="light">Message</Button>
                 </div>
                 <div className="text-xl xs-mx:text-base flex gap-1 items-center mb-1"> <IconBriefcase className="h-5 w-5" stroke={1.5} />{profile?.jobTitle}  &bull; {profile?.company}</div>
                 <div className="text-lg flex xs-mx:text-base gap-1 items-center text-mine-shaft-300 mb-1">

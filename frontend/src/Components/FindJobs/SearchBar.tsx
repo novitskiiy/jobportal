@@ -13,12 +13,28 @@ const SearchBar = () => {
     const [opened, { toggle }] = useDisclosure(false);
     const dispatch = useDispatch();
     const [value, setValue] = useState<[number, number]>([0, 300]);
+    
+    // Функция для безопасного обновления значения
+    const safeSetValue = (newValue: [number, number]) => {
+        const safeValue: [number, number] = [
+            Math.max(0, Math.min(300, newValue[0] || 0)),
+            Math.max(0, Math.min(300, newValue[1] || 300))
+        ];
+        setValue(safeValue);
+    };
+    
     const handleChange = (event: any) => {
         dispatch(updateFilter({ salary: event }));
     }
-    useEffect(()=>{
-        if(!filter.salary)setValue([0, 300]);
-    }, [filter])
+    
+    useEffect(() => {
+        // Синхронизируем локальное состояние с глобальным фильтром
+        if (filter.salary && Array.isArray(filter.salary) && filter.salary.length === 2) {
+            safeSetValue(filter.salary);
+        } else {
+            safeSetValue([0, 300]);
+        }
+    }, [filter.salary])
 
 
 
@@ -42,9 +58,18 @@ const SearchBar = () => {
             <div className="w-1/5 lg-mx:w-1/4 lg-mx:mt-7 bs-mx:w-[30%] xs-mx:mb-1 sm-mx:w-[48%] text-sm text-mine-shaft-300 [&_.mantine-Slider-label]:!translate-y-10 xs-mx:w-full">
                 <div className="flex mb-1 justify-between">
                     <div>Salary</div>
-                    <div>${value[0]}K - ${value[1]}K</div>
+                    <div>${Math.max(0, value[0] || 0)}K - ${Math.min(300, value[1] || 300)}K</div>
                 </div>
-                <RangeSlider color="brightSun.4" size="xs" value={value} onChange={setValue} onChangeEnd={handleChange} />
+                <RangeSlider 
+                    color="brightSun.4" 
+                    size="xs" 
+                    value={value} 
+                    onChange={safeSetValue} 
+                    onChangeEnd={handleChange}
+                    min={0}
+                    max={300}
+                    step={1}
+                />
             </div>
         </div>
         </Collapse>
