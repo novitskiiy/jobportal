@@ -60,7 +60,7 @@ const SearchBar = () => {
                     <div>{value[0]} - {value[1]}</div>
                 </div>
                 <RangeSlider 
-                    color="brightSun.4" 
+                    color="blue" 
                     size="xs" 
                     value={value} 
                     onChange={handleSliderChange} 

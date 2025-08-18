@@ -1,7 +1,7 @@
 import { Anchor, Avatar, Button, Divider, Modal, Text } from "@mantine/core";
 import { DateInput, TimeInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
-import { IconCalendarMonth, IconHeart, IconMapPin } from "@tabler/icons-react";
+import { IconCalendarMonth, IconMapPin } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getProfile } from "../../Services/ProfileService";
@@ -54,7 +54,7 @@ const TalentCard = (props: any) => {
 
                 </div>
             </div>
-            <IconHeart className="cursor-pointer text-mine-shaft-300" stroke={1.5} />
+
         </div>
         {/* Кнопка Delete для вкладки Rejected */}
         {props.onDelete && (

@@ -30,7 +30,7 @@ const JobCard = (props: any) => {
                     <div className="text-xs text-mine-shaft-300"><Link className="hover:text-mine-shaft-200" to="/company">{props.company}</Link> &bull; {props.applicants?props.applicants.length:0} Applicants</div>
                 </div>
             </div>
-            {profile.savedJobs?.includes(props.id) ?<IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer text-ocean-blue-400 " stroke={1.5} />:<IconBookmark onClick={handleSaveJob} className="cursor-pointer hover:text-ocean-blue-400 text-mine-shaft-300" stroke={1.5} />
+            {profile.savedJobs?.includes(props.id) ?<IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer text-brightSun-400 " stroke={1.5} />:<IconBookmark onClick={handleSaveJob} className="cursor-pointer hover:text-brightSun-400 text-brightSun-400" stroke={1.5} />
             }
         </div>
         <div className="flex gap-2 flex-wrap">

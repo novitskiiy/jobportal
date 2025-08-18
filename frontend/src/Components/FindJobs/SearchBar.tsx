@@ -61,7 +61,7 @@ const SearchBar = () => {
                     <div>${Math.max(0, value[0] || 0)}K - ${Math.min(300, value[1] || 300)}K</div>
                 </div>
                 <RangeSlider 
-                    color="oceanBlue.4" 
+                    color="blue" 
                     size="xs" 
                     value={value} 
                     onChange={safeSetValue} 
