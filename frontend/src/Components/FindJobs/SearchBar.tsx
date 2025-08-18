@@ -42,7 +42,7 @@ const SearchBar = () => {
     return (<div>
         <div className="flex justify-end">
 
-         {matches&&<Button onClick={toggle} m="sm" radius="lg" className="align" variant="outline" color="brightSun.4" autoContrast >{opened?"Close":"Filters"}</Button>}
+         {matches&&<Button onClick={toggle} m="sm" radius="lg" className="align" variant="outline" color="oceanBlue.4" autoContrast >{opened?"Close":"Filters"}</Button>}
         </div>
         <Collapse in={(opened || !matches)}>
         <div className="px-5 lg-mx:!flex-wrap py-8 items-center !text-mine-shaft-100 flex ">
@@ -61,7 +61,7 @@ const SearchBar = () => {
                     <div>${Math.max(0, value[0] || 0)}K - ${Math.min(300, value[1] || 300)}K</div>
                 </div>
                 <RangeSlider 
-                    color="brightSun.4" 
+                    color="oceanBlue.4" 
                     size="xs" 
                     value={value} 
                     onChange={safeSetValue} 

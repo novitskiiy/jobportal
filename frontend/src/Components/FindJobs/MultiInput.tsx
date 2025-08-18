@@ -82,7 +82,7 @@ const MultiInput = (props:any) => {
         <Combobox  store={combobox} onOptionSubmit={handleValueSelect} withinPortal={false}>
             <Combobox.DropdownTarget>
                 <PillsInput variant='unstyled' size="sm" pointer onClick={() => combobox.toggleDropdown()}
-                    leftSection={<div className="bg-mine-shaft-900 rounded-full mr-2 text-bright-sun-400 p-1"><props.icon size={20} /> </div>}
+                    leftSection={<div className="bg-mine-shaft-900 rounded-full mr-2 text-ocean-blue-400 p-1"><props.icon size={20} /> </div>}
                     rightSection={<IconSelector  />}
                 >
 

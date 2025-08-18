@@ -19,7 +19,7 @@ const JobCard = (props: any) => {
         dispatch(changeProfile(updatedProfile));
     }
     
-    return <div data-aos="fade-up"  className="p-4 rounded-xl bg-mine-shaft-900   hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400  transition duration-300 ease-in-out w-72 sm-mx:w-full flex flex-col gap-3">
+    return <div data-aos="fade-up"  className="p-4 rounded-xl bg-mine-shaft-900   hover:shadow-[0_0_5px_1px_#3b82f6] !shadow-ocean-blue-400  transition duration-300 ease-in-out w-72 sm-mx:w-full flex flex-col gap-3">
         <div className="flex justify-between">
             <div className="flex gap-2 items-center">
                 <div className="p-2 bg-mine-shaft-800 rounded-md">
@@ -30,13 +30,13 @@ const JobCard = (props: any) => {
                     <div className="text-xs text-mine-shaft-300"><Link className="hover:text-mine-shaft-200" to="/company">{props.company}</Link> &bull; {props.applicants?props.applicants.length:0} Applicants</div>
                 </div>
             </div>
-            {profile.savedJobs?.includes(props.id) ?<IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer text-bright-sun-400 " stroke={1.5} />:<IconBookmark onClick={handleSaveJob} className="cursor-pointer hover:text-bright-sun-400 text-mine-shaft-300" stroke={1.5} />
+            {profile.savedJobs?.includes(props.id) ?<IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer text-ocean-blue-400 " stroke={1.5} />:<IconBookmark onClick={handleSaveJob} className="cursor-pointer hover:text-ocean-blue-400 text-mine-shaft-300" stroke={1.5} />
             }
         </div>
         <div className="flex gap-2 flex-wrap">
-            <div className="p-2 py-1 bg-mine-shaft-800 text-bright-sun-400 rounded-lg text-xs">{props.experience}</div>
-            <div className="p-2 py-1  bg-mine-shaft-800 text-bright-sun-400 rounded-lg text-xs">{props.jobType}</div>
-            <div className="p-2 py-1  bg-mine-shaft-800 text-bright-sun-400 rounded-lg text-xs">{props.location}</div>
+            <div className="p-2 py-1 bg-mine-shaft-800 text-ocean-blue-400 rounded-lg text-xs">{props.experience}</div>
+            <div className="p-2 py-1  bg-mine-shaft-800 text-ocean-blue-400 rounded-lg text-xs">{props.jobType}</div>
+            <div className="p-2 py-1  bg-mine-shaft-800 text-ocean-blue-400 rounded-lg text-xs">{props.location}</div>
         </div>
         <div>
             <Text className="!text-xs text-justify !text-mine-shaft-300" lineClamp={3}>{props.about}

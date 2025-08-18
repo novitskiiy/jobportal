@@ -18,26 +18,31 @@ const PostedJobPage = () => {
     const [job, setJob] = useState<any>(null);
     const matches = useMediaQuery('(max-width: 767px)');
 
+    // Загружаем список вакансий один раз (без мигания при смене id)
     useEffect(()=>{
-        window.scrollTo(0,0);
         dispatch(showOverlay());
-        getJobsPostedBy(user.id).then((res)=>{
-            setJobList(res);
-            if(res && res.length>0 && Number(id) == 0){
-                res.forEach((x:any)=>{
-                    if(x.jobStatus=="ACTIVE"){
-                        navigate(`/posted-jobs/${x.id}`);
+        getJobsPostedBy(user.id)
+            .then((res)=>{
+                setJobList(res);
+                if(res && res.length>0 && Number(id) === 0){
+                    const firstActive = res.find((x:any)=>x.jobStatus === "ACTIVE") || res[0];
+                    if(firstActive){
+                        navigate(`/posted-jobs/${firstActive.id}`);
                     }
-
-                }, [])
-            }
-            res.forEach((item:any)=>{
-                if(id==item.id)setJob(item);
+                }
             })
-            window.scrollTo(0,0);
-        }).catch((err)=>console.log(err))
-        .finally(()=>dispatch(hideOverlay()));
-    }, [id])
+            .catch((err)=>console.log(err))
+            .finally(()=>dispatch(hideOverlay()));
+    }, [])
+
+    // При смене id просто выбираем вакансию из уже загруженного списка
+    useEffect(()=>{
+        if(!id) return;
+        const found = jobList.find((item:any)=> String(item.id) === String(id));
+        if(found){
+            setJob(found);
+        }
+    }, [id, jobList])
     return (
         <div className="min-h-[90vh] bg-mine-shaft-950 font-['poppins'] px-5  ">
             <Divider />

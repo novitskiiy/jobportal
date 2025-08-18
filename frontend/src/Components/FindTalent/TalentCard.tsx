@@ -42,7 +42,7 @@ const TalentCard = (props: any) => {
         }).catch((err)=>console.log(err))
         else setProfile(props);
     }, [props])
-    return <div data-aos="fade-up" className="p-4 rounded-xl bg-mine-shaft-900   hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400  transition duration-300 ease-in-out w-96 bs-mx:w-[48%] md-mx:w-full flex flex-col gap-3">
+    return <div data-aos="fade-up" className="p-4 rounded-xl bg-mine-shaft-900   hover:shadow-[0_0_5px_1px_#3b82f6] !shadow-ocean-blue-400  transition duration-300 ease-in-out w-96 bs-mx:w-[48%] md-mx:w-full flex flex-col gap-3">
         <div className="flex justify-between">
             <div className="flex gap-2 items-center">
                 <div className="p-2 bg-mine-shaft-800 rounded-full">
@@ -71,7 +71,7 @@ const TalentCard = (props: any) => {
         )}
         <div className="flex gap-2 flex-wrap ">
             {
-                profile?.skills?.map((skill: any, index: any) => index<4 && <div key={index} className="p-2 py-1 bg-mine-shaft-800 text-bright-sun-400 rounded-lg text-xs">{skill}</div>)
+                profile?.skills?.map((skill: any, index: any) => index<4 && <div key={index} className="p-2 py-1 bg-mine-shaft-800 text-ocean-blue-400 rounded-lg text-xs">{skill}</div>)
             }
         </div>
         <div>
@@ -127,13 +127,13 @@ const TalentCard = (props: any) => {
         <Modal opened={app} onClose={closeApp} radius="lg" title="Application" centered>
             <div className="flex flex-col gap-4">
                 <div >
-                    Email: &emsp;<a className="text-bright-sun-400 hover:underline cursor-pointer " href={`mailto:${props?.email}`}>{props?.email}</a>
+                    Email: &emsp;<a className="text-ocean-blue-400 hover:underline cursor-pointer " href={`mailto:${props?.email}`}>{props?.email}</a>
                 </div>
                 <div >
-                    Website: &emsp;<a className="text-bright-sun-400 hover:underline cursor-pointer " target="_blank" href={props.website}>{props.website}</a>
+                    Website: &emsp;<a className="text-ocean-blue-400 hover:underline cursor-pointer " target="_blank" href={props.website}>{props.website}</a>
                 </div>
                 <div >
-                    Resume: &emsp;<span className="text-bright-sun-400 hover:underline cursor-pointer" onClick={()=>openPDF(props.resume)}>{props.name}</span>
+                    Resume: &emsp;<span className="text-ocean-blue-400 hover:underline cursor-pointer" onClick={()=>openPDF(props.resume)}>{props.name}</span>
                     
                 </div>
                 <div  >

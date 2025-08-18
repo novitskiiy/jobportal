@@ -45,7 +45,7 @@ setShowList(jobList.filter((job:any)=>profile?.savedJobs?.includes(job.id)));
         <div className="text-2xl font-semibold mb-5">Job History</div>
         <div>
             <Tabs  value={activeTab} onChange={handleTabChange} radius="lg" autoContrast variant="outline">
-                <Tabs.List className="font-semibold [&_button[data-active='true']]:!border-b-mine-shaft-950 [&_button]:!text-xl sm-mx:[&_button]:!text-lg  xs-mx:[&_button]:!text-base xsm-mx:[&_button]:!text-sm xs-mx:[&_button]:!px-1.5 xs-mx:[&_button]:!py-2 mb-5 [&_button[data-active='true']]:text-bright-sun-400 xs-mx:font-medium">
+                <Tabs.List className="font-semibold [&_button[data-active='true']]:!border-b-mine-shaft-950 [&_button]:!text-xl sm-mx:[&_button]:!text-lg  xs-mx:[&_button]:!text-base xsm-mx:[&_button]:!text-sm xs-mx:[&_button]:!px-1.5 xs-mx:[&_button]:!py-2 mb-5 [&_button[data-active='true']]:text-ocean-blue-400 xs-mx:font-medium">
                     <Tabs.Tab value="APPLIED">Applied</Tabs.Tab>
                     <Tabs.Tab value="SAVED"> Saved</Tabs.Tab>
                     <Tabs.Tab value="OFFERED">Offered</Tabs.Tab>

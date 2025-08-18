@@ -23,7 +23,7 @@ const PostedJobDesc = (props:any) => {
         <div className="font-medium xs-mx:text-sm text-mine-shaft-300 mb-5">{props?.location}</div>
         <div className="">
             <Tabs value={tab} onChange={handleTab} radius="lg" autoContrast variant="outline">
-                <Tabs.List className="font-semibold [&_button[data-active='true']]:!border-b-mine-shaft-950 [&_button]:!text-xl sm-mx:[&_button]:!text-lg  xs-mx:[&_button]:!text-base xsm-mx:[&_button]:!text-sm xs-mx:[&_button]:!px-1.5 xs-mx:[&_button]:!py-2 mb-5 [&_button[data-active='true']]:text-bright-sun-400 xs-mx:font-medium">
+                <Tabs.List className="font-semibold [&_button[data-active='true']]:!border-b-mine-shaft-950 [&_button]:!text-xl sm-mx:[&_button]:!text-lg  xs-mx:[&_button]:!text-base xsm-mx:[&_button]:!text-sm xs-mx:[&_button]:!px-1.5 xs-mx:[&_button]:!py-2 mb-5 [&_button[data-active='true']]:text-ocean-blue-400 xs-mx:font-medium">
                     <Tabs.Tab value="overview">Overview</Tabs.Tab>
                     <Tabs.Tab value="applicants">Applicants</Tabs.Tab>
                     <Tabs.Tab value="invited">Invited</Tabs.Tab>

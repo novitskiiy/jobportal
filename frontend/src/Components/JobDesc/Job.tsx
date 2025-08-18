@@ -56,17 +56,17 @@ const Job = (props:any) => {
             </div>
             <div className="flex sm:flex-col gap-2 items-center sm-mx:my-5 sm-mx:w-full sm-mx:[&>button]:w-1/2">
                 { (props.edit || !applied) &&<Link to={props.edit?`/post-job/${props.id}`:`/apply-job/${props.id}`} >
-                    <Button color="brightSun.4" size="sm" variant="light">{props.closed?"Reopen":props.edit?"Edit":"Apply"}</Button>
+                    <Button color="oceanBlue.4" size="sm" variant="light">{props.closed?"Reopen":props.edit?"Edit":"Apply"}</Button>
                 </Link>}
                 {applied && !props.edit && <Button  color="green.8" size="sm" variant="light">Applied</Button>}
-                {props.edit && !props.closed? <Button onClick={handleClose}  color="red.4" size="sm" variant="light">Close</Button>:profile.savedJobs?.includes(props.id) ?<IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer text-bright-sun-400 " stroke={1.5} />:<IconBookmark onClick={handleSaveJob} className="cursor-pointer hover:text-bright-sun-400  text-mine-shaft-300" stroke={1.5} />}
+                {props.edit && !props.closed? <Button onClick={handleClose}  color="red.4" size="sm" variant="light">Close</Button>:profile.savedJobs?.includes(props.id) ?<IconBookmarkFilled onClick={handleSaveJob} className="cursor-pointer text-ocean-blue-400 " stroke={1.5} />:<IconBookmark onClick={handleSaveJob} className="cursor-pointer hover:text-ocean-blue-400  text-mine-shaft-300" stroke={1.5} />}
             </div>
         </div>
         <Divider size="xs" my="xl" />
         <div className="flex justify-between gap-4 sm-mx:flex-wrap">
             {
                 card.map((item, index) => <div key={index} className="flex flex-col text-sm gap-1 items-center ">
-                    <ActionIcon className="!h-12 !w-12 xs-mx:!h-8 xs-mx:!w-8" variant="light" color="brightSun.4" radius="xl" ><item.icon className="h-4/5 w-4/5" /></ActionIcon>
+                    <ActionIcon className="!h-12 !w-12 xs-mx:!h-8 xs-mx:!w-8" variant="light" color="oceanBlue.4" radius="xl" ><item.icon className="h-4/5 w-4/5" /></ActionIcon>
                     <div className="text-mine-shaft-300 xs-mx:text-sm">{item.name}</div>
                     <div className="text-base font-semibold xs-mx:text-sm">{item.id === "packageOffered" ? formatSalary(props[item.id]) : (props ? props[item.id] : "NA")}</div>
                 </div>)}
@@ -76,12 +76,12 @@ const Job = (props:any) => {
             <div className="text-xl font-semibold mb-5">Required Skills</div>
             <div className="flex flex-wrap gap-2">
                 {
-                    props.skillsRequired?.map((skill:any, index:number) => <ActionIcon key={index} className="!h-fit !w-fit font-medium !text-sm xs-mx:!text-xs" variant="light" color="brightSun.4" p="xs" radius="xl">{skill}</ActionIcon>)
+                    props.skillsRequired?.map((skill:any, index:number) => <ActionIcon key={index} className="!h-fit !w-fit font-medium !text-sm xs-mx:!text-xs" variant="light" color="oceanBlue.4" p="xs" radius="xl">{skill}</ActionIcon>)
                 }
             </div>
         </div>
         <Divider size="xs" my="xl" />
-        <div className="[&>h4]:text-xl [&_*]:text-mine-shaft-300 [&_li]:marker:text-bright-sun-300 [&_li]:mb-1 [&>h4]:text-mine-shaft-200 [&>h4]:font-semibold [&>h4]:my-5 [&_p]:text-justify [&_p]:text-sm [&_li]:text-sm" dangerouslySetInnerHTML={{ __html: cleanHTML }}>
+        <div className="[&>h4]:text-xl [&_*]:text-mine-shaft-300 [&_li]:marker:text-ocean-blue-300 [&_li]:mb-1 [&>h4]:text-mine-shaft-200 [&>h4]:font-semibold [&>h4]:my-5 [&_p]:text-justify [&_p]:text-sm [&_li]:text-sm" dangerouslySetInnerHTML={{ __html: cleanHTML }}>
         </div>
         <Divider size="xs" my="xl" />
         <div>
