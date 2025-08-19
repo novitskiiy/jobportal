@@ -47,6 +47,7 @@ const AppRoutes = () => {
         <Route path='/talent-profile/:id' element={<ProtectedRoute allowedRoles={['EMPLOYER']}><TalentProfilePage /></ProtectedRoute>} />
 
         <Route path='/job-history' element={<ProtectedRoute allowedRoles={['APPLICANT']}><JobHistoryPage /></ProtectedRoute>} />
+        <Route path='/posted-jobs' element={<ProtectedRoute allowedRoles={['EMPLOYER']}><PostedJobPage /></ProtectedRoute>} />
         <Route path='/posted-jobs/:id' element={<ProtectedRoute allowedRoles={['EMPLOYER']}><PostedJobPage /></ProtectedRoute>} />
         <Route path='/post-job/:id' element={<ProtectedRoute allowedRoles={['EMPLOYER']}><PostJobPage /></ProtectedRoute>} />
         <Route path='/signup' element={<PublicRoute><SignUpPage /></PublicRoute>} />

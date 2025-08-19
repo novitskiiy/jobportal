@@ -30,5 +30,6 @@ public interface JobService {
 	
 	public void respondToOffer(Application application) throws JobPortalException;
 	
+	public void deleteJob(Long jobId) throws JobPortalException;
 
 }

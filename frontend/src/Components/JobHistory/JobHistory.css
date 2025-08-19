@@ -1,0 +1,37 @@
+.job-card-enter {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.job-card-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms ease-in, transform 300ms ease-out;
+}
+
+.job-card-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.job-card-exit-active {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 300ms ease-in, transform 300ms ease-out;
+}
+
+.status-update-highlight {
+    animation: statusUpdatePulse 2s ease-in-out;
+}
+
+@keyframes statusUpdatePulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+}

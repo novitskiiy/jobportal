@@ -13,6 +13,7 @@ import com.jobportal.dto.ApplicationStatus;
 import com.jobportal.dto.JobDTO;
 import com.jobportal.dto.JobStatus;
 import com.jobportal.dto.NotificationDTO;
+import com.jobportal.dto.StatusUpdateDTO;
 import com.jobportal.entity.Applicant;
 import com.jobportal.entity.Job;
 import com.jobportal.exception.JobPortalException;
@@ -26,25 +27,36 @@ public class JobServiceImpl implements JobService {
 	private JobRepository jobRepository;
 	@Autowired
 	private NotificationService notificationService;
+	@Autowired
+	private WebSocketNotificationService webSocketNotificationService;
 
 	@Override
 	public JobDTO postJob(JobDTO jobDTO) throws JobPortalException {
 		if(jobDTO.getId()==0) {
 			jobDTO.setId(Utilities.getNextSequenceId("jobs"));
 			jobDTO.setPostTime(LocalDateTime.now());
-			NotificationDTO notiDto=new NotificationDTO();
-			notiDto.setAction("Job Posted");
-			notiDto.setMessage("Job Posted Successfully for "+jobDTO.getJobTitle()+" at "+ jobDTO.getCompany());
-			
-			notiDto.setUserId(jobDTO.getPostedBy());
-			notiDto.setRoute("/posted-jobs/"+jobDTO.getId());
-				notificationService.sendNotification(notiDto);
+			// Убираем создание уведомления "Job Posted" так как есть фронтенд уведомление "Success"
 		}
 		else {
 			Job job=jobRepository.findById(jobDTO.getId()).orElseThrow(() -> new JobPortalException("JOB_NOT_FOUND"));
 			if(job.getJobStatus().equals(JobStatus.DRAFT) || jobDTO.getJobStatus().equals(JobStatus.CLOSED))jobDTO.setPostTime(LocalDateTime.now());
+			
+			// Если статус вакансии изменился, отправляем WebSocket уведомление
+			if (!job.getJobStatus().equals(jobDTO.getJobStatus())) {
+				StatusUpdateDTO statusUpdate = new StatusUpdateDTO();
+				statusUpdate.setJobId(jobDTO.getId());
+				statusUpdate.setOldStatus(job.getJobStatus().toString());
+				statusUpdate.setNewStatus(jobDTO.getJobStatus().toString());
+				statusUpdate.setType("JOB_STATUS");
+				statusUpdate.setMessage("Job status changed from " + job.getJobStatus() + " to " + jobDTO.getJobStatus());
+				statusUpdate.setTargetUserId(jobDTO.getPostedBy());
+				
+				// Отправляем обновление работодателю
+				webSocketNotificationService.sendStatusUpdateToUser(jobDTO.getPostedBy(), statusUpdate);
+			}
 		}
-		return jobRepository.save(jobDTO.toEntity()).toDTO();
+		jobRepository.save(jobDTO.toEntity());
+		return jobDTO;
 	}
 
 	
@@ -60,6 +72,8 @@ public class JobServiceImpl implements JobService {
 
 	@Override
 	public void applyJob(Long id, ApplicantDTO applicantDTO) throws JobPortalException {
+		System.out.println("JobServiceImpl: Начинаем обработку заявки для вакансии " + id + " от кандидата " + applicantDTO.getApplicantId());
+		
 		Job job = jobRepository.findById(id).orElseThrow(() -> new JobPortalException("JOB_NOT_FOUND"));
 		List<Applicant> applicants = job.getApplicants();
 		if (applicants == null)applicants = new ArrayList<>();
@@ -68,6 +82,9 @@ public class JobServiceImpl implements JobService {
 		applicants.add(applicantDTO.toEntity());
 		job.setApplicants(applicants);
 		jobRepository.save(job);
+		
+		System.out.println("JobServiceImpl: Заявка сохранена в базе данных");
+		
 		// Добавляем отправку уведомления employer-у через Kafka
 		NotificationDTO notiDto = new NotificationDTO();
 		notiDto.setAction("New Application");
@@ -75,6 +92,35 @@ public class JobServiceImpl implements JobService {
 		notiDto.setUserId(job.getPostedBy());
 		notiDto.setRoute("/posted-jobs/" + job.getId());
 		notificationService.sendNotification(notiDto);
+		
+		// Отправляем WebSocket уведомление о новой заявке работодателю
+		StatusUpdateDTO statusUpdate = new StatusUpdateDTO();
+		statusUpdate.setJobId(job.getId());
+		statusUpdate.setApplicantId(applicantDTO.getApplicantId());
+		statusUpdate.setOldStatus("NONE");
+		statusUpdate.setNewStatus(ApplicationStatus.APPLIED.toString());
+		statusUpdate.setType("NEW_APPLICATION");
+		statusUpdate.setMessage("New application received from " + applicantDTO.getName());
+		statusUpdate.setTargetUserId(job.getPostedBy());
+		
+		// Добавляем полные данные кандидата
+		statusUpdate.setApplicantName(applicantDTO.getName());
+		statusUpdate.setApplicantEmail(applicantDTO.getEmail());
+		statusUpdate.setApplicantPhone(applicantDTO.getPhone());
+		statusUpdate.setApplicantWebsite(applicantDTO.getWebsite());
+		statusUpdate.setApplicantResume(applicantDTO.getResume());
+		statusUpdate.setApplicantCoverLetter(applicantDTO.getCoverLetter());
+		
+		System.out.println("JobServiceImpl: Данные кандидата для WebSocket:");
+		System.out.println("  Имя: " + applicantDTO.getName());
+		System.out.println("  Email: " + applicantDTO.getEmail());
+		System.out.println("  Телефон: " + applicantDTO.getPhone());
+		System.out.println("  Веб-сайт: " + applicantDTO.getWebsite());
+		
+		// Отправляем обновление работодателю через WebSocket
+		System.out.println("Отправляем WebSocket уведомление о новой заявке для работодателя " + job.getPostedBy());
+		webSocketNotificationService.sendStatusUpdateToUser(job.getPostedBy(), statusUpdate);
+		System.out.println("JobServiceImpl: WebSocket уведомление отправлено");
 	}
 
 	@Override
@@ -92,6 +138,14 @@ public class JobServiceImpl implements JobService {
 	@Override
 	public void changeAppStatus(Application application) throws JobPortalException {
 		Job job = jobRepository.findById(application.getId()).orElseThrow(() -> new JobPortalException("JOB_NOT_FOUND"));
+		
+		// Находим текущий статус заявки
+		ApplicationStatus oldStatus = job.getApplicants().stream()
+			.filter(app -> app.getApplicantId().equals(application.getApplicantId()))
+			.findFirst()
+			.map(Applicant::getApplicationStatus)
+			.orElse(null);
+		
 		List<Applicant> apps = job.getApplicants().stream().map((x) -> {
 			if (application.getApplicantId() == x.getApplicantId()) {
 				x.setApplicationStatus(application.getApplicationStatus());
@@ -99,7 +153,7 @@ public class JobServiceImpl implements JobService {
 					x.setInterviewTime(application.getInterviewTime());
 					NotificationDTO notiDto=new NotificationDTO();
 					notiDto.setAction("Interview Scheduled");
-					notiDto.setMessage("Interview scheduled for job id: "+application.getId());
+					notiDto.setMessage("Interview scheduled for job: "+job.getJobTitle());
 					notiDto.setUserId(application.getApplicantId());
 					notiDto.setRoute("/job-history");
 					try {
@@ -110,7 +164,7 @@ public class JobServiceImpl implements JobService {
 				} else if(application.getApplicationStatus().equals(ApplicationStatus.OFFERED)) {
 					NotificationDTO notiDto=new NotificationDTO();
 					notiDto.setAction("Application Accepted");
-					notiDto.setMessage("Congratulations! You have been accepted for job id: "+application.getId());
+					notiDto.setMessage("Congratulations! You have been accepted for job: "+job.getJobTitle());
 					notiDto.setUserId(application.getApplicantId());
 					notiDto.setRoute("/job-history");
 					try {
@@ -121,7 +175,7 @@ public class JobServiceImpl implements JobService {
 				} else if(application.getApplicationStatus().equals(ApplicationStatus.REJECTED)) {
 					NotificationDTO notiDto=new NotificationDTO();
 					notiDto.setAction("Application Rejected");
-					notiDto.setMessage("Unfortunately, you have been rejected for job id: "+application.getId());
+					notiDto.setMessage("Unfortunately, you have been rejected for job: "+job.getJobTitle());
 					notiDto.setUserId(application.getApplicantId());
 					notiDto.setRoute("/job-history");
 					try {
@@ -136,6 +190,21 @@ public class JobServiceImpl implements JobService {
 		job.setApplicants(apps);
 		jobRepository.save(job);
 		
+		// Отправляем обновление статуса через WebSocket
+		StatusUpdateDTO statusUpdate = new StatusUpdateDTO();
+		statusUpdate.setJobId(application.getId());
+		statusUpdate.setApplicantId(application.getApplicantId());
+		statusUpdate.setOldStatus(oldStatus != null ? oldStatus.toString() : "UNKNOWN");
+		statusUpdate.setNewStatus(application.getApplicationStatus().toString());
+		statusUpdate.setType("APPLICATION_STATUS");
+		statusUpdate.setMessage("Application status changed from " + oldStatus + " to " + application.getApplicationStatus());
+		statusUpdate.setTargetUserId(application.getApplicantId());
+		
+		// Отправляем обновление соискателю
+		webSocketNotificationService.sendStatusUpdateToUser(application.getApplicantId(), statusUpdate);
+		
+		// Отправляем обновление работодателю
+		webSocketNotificationService.sendStatusUpdateToUser(job.getPostedBy(), statusUpdate);
 	}
 
 	@Override
@@ -157,6 +226,14 @@ public class JobServiceImpl implements JobService {
 	@Override
 	public void respondToOffer(Application application) throws JobPortalException {
 		Job job = jobRepository.findById(application.getId()).orElseThrow(() -> new JobPortalException("JOB_NOT_FOUND"));
+		
+		// Находим текущий статус заявки
+		ApplicationStatus oldStatus = job.getApplicants().stream()
+			.filter(app -> app.getApplicantId().equals(application.getApplicantId()))
+			.findFirst()
+			.map(Applicant::getApplicationStatus)
+			.orElse(null);
+		
 		List<Applicant> apps = job.getApplicants().stream().map((x) -> {
 			if (application.getApplicantId() == x.getApplicantId()) {
 				x.setApplicationStatus(application.getApplicationStatus());
@@ -182,6 +259,34 @@ public class JobServiceImpl implements JobService {
 		}).toList();
 		job.setApplicants(apps);
 		jobRepository.save(job);
+		
+		// Отправляем обновление статуса через WebSocket
+		StatusUpdateDTO statusUpdate = new StatusUpdateDTO();
+		statusUpdate.setJobId(application.getId());
+		statusUpdate.setApplicantId(application.getApplicantId());
+		statusUpdate.setOldStatus(oldStatus != null ? oldStatus.toString() : "UNKNOWN");
+		statusUpdate.setNewStatus(application.getApplicationStatus().toString());
+		statusUpdate.setType("APPLICATION_STATUS");
+		statusUpdate.setMessage("Offer response: " + application.getApplicationStatus());
+		statusUpdate.setTargetUserId(job.getPostedBy());
+		
+		// Отправляем обновление работодателю
+		webSocketNotificationService.sendStatusUpdateToUser(job.getPostedBy(), statusUpdate);
+	}
+
+	@Override
+	public void deleteJob(Long jobId) throws JobPortalException {
+		Job job = jobRepository.findById(jobId)
+			.orElseThrow(() -> new JobPortalException("JOB_NOT_FOUND"));
+		
+		// Проверяем, что вакансия закрыта
+		if (!job.getJobStatus().equals(JobStatus.CLOSED)) {
+			throw new JobPortalException("CANNOT_DELETE_ACTIVE_JOB");
+		}
+		
+		// Удаляем вакансию из базы данных
+		jobRepository.delete(job);
+		System.out.println("JobServiceImpl: Вакансия " + jobId + " удалена из базы данных");
 	}
 
 }

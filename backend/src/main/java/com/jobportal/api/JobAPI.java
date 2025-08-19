@@ -105,5 +105,12 @@ public class JobAPI {
 		return new ResponseEntity<>(new ResponseDTO("Applicant deleted from job successfully"), HttpStatus.OK);
 	}
 	
+	@DeleteMapping("/{jobId}")
+	@PreAuthorize("hasRole('EMPLOYER')")
+	public ResponseEntity<ResponseDTO> deleteJob(@PathVariable Long jobId) throws JobPortalException {
+		jobService.deleteJob(jobId);
+		return new ResponseEntity<>(new ResponseDTO("Job deleted successfully"), HttpStatus.OK);
+	}
+	
 	
 }

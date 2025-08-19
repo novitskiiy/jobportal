@@ -37,8 +37,11 @@ const Card = (props: any) => {
             } else {
                 successNotification("Offer Rejected", "You have rejected the job offer.");
             }
-            // Обновляем страницу для отображения изменений
-            window.location.reload();
+            
+            // Плавное обновление вместо перезагрузки страницы
+            if (props.onStatusChange) {
+                props.onStatusChange(props.id, status);
+            }
         } catch (err: any) {
             errorNotification("Error", err.response?.data?.errorMessage || "Failed to respond to offer");
         }
@@ -75,8 +78,12 @@ const Card = (props: any) => {
         {(props.offered || props.interviewing || props.accepted) && <Divider color="mineShaft.7" size="xs" />}
         {props.offered &&
         <div className="flex gap-2">
-            <Button color="brightSun.4" variant="outline" fullWidth onClick={() => handleRespondToOffer("ACCEPTED")}>Accept</Button>
-            <Button color="brightSun.4" variant="light" fullWidth onClick={() => handleRespondToOffer("REJECTED")}>Reject</Button>
+            <div className="w-1/2">
+                <Button color="green" variant="filled" fullWidth onClick={() => handleRespondToOffer("ACCEPTED")}>Accept</Button>
+            </div>
+            <div className="w-1/2">
+                <Button color="red" variant="filled" fullWidth onClick={() => handleRespondToOffer("REJECTED")}>Reject</Button>
+            </div>
         </div>
         }
         {props.accepted &&
