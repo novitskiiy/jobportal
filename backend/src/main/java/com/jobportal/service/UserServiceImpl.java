@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
 		MimeMessage mm = mailSender.createMimeMessage();
 		MimeMessageHelper message = new MimeMessageHelper(mm, true);
 		message.setTo(email);
-		message.setSubject("Your OTP Code");
+		message.setSubject("Password Reset - JobPortal");
 		String generatedOtp = Utilities.generateOTP();
 		OTP otp = new OTP(email, generatedOtp, LocalDateTime.now());
 		otpRepository.save(otp);
