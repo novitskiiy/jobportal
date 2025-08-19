@@ -1,5 +1,5 @@
 import { Avatar, Burger, Button, Drawer, Indicator } from "@mantine/core";
-import { IconBriefcase, IconAsset, IconBell, IconSettings, IconX } from "@tabler/icons-react";
+import { IconBriefcase, IconAsset, IconBell, IconSettings, IconX, IconArrowLeft } from "@tabler/icons-react";
 import NavLinks from "./NavLinks";
 import ProfileMenu from "./ProfileMenu";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -85,7 +85,7 @@ const Header = () => {
             <NavLinks />
             <div className="flex gap-3 items-center">
 
-                {user ? <ProfileMenu /> : <Link to="/login" className="text-mine-shaft-200 hover:text-ocean-blue-400 "><Button color="oceanBlue.4" variant="subtle">Login</Button></Link>}
+                {user ? <ProfileMenu /> : <Link to="/login" className="text-mine-shaft-200 hover:text-ocean-blue-400 "><Button color="brightSun.4" variant="light">Login</Button></Link>}
                 {/* <div className=" bg-mine-shaft-900 p-1.5 rounded-full">
                     <IconSettings stroke={1.5} />
                 </div> */}
