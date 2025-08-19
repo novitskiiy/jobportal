@@ -37,7 +37,7 @@ const Header = () => {
             mobileLinks = [
                 { name: "Find Talent", url: "find-talent" },
                 { name: "Post Job", url: "post-job/0" },
-                { name: "Posted Jobs", url: "posted-jobs/0" }
+                { name: "Posted Jobs", url: "posted-jobs" }
             ];
         } else if (accountType === 'APPLICANT') {
             mobileLinks = [

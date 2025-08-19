@@ -23,6 +23,9 @@ public class NotificationServiceImpl implements NotificationService{
     @Autowired
     private KafkaTemplate<String, NotificationDTO> kafkaTemplate;
     
+    @Autowired
+    private WebSocketNotificationService webSocketNotificationService;
+    
     private static final String NOTIFICATION_TOPIC = "notification-events";
 
 	@Override
@@ -36,6 +39,8 @@ public class NotificationServiceImpl implements NotificationService{
 		notificationDTO.setTimestamp(LocalDateTime.now());
 		notificationRepository.save(notificationDTO.toEntity());
 		sendNotificationEvent(notificationDTO);
+		// Отправляем уведомление через WebSocket в реальном времени
+		webSocketNotificationService.sendNotificationToUser(notificationDTO.getUserId(), notificationDTO);
 	}
 
 	@Override

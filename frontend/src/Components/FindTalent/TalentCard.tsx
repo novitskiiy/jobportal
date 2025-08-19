@@ -29,7 +29,16 @@ const TalentCard = (props: any) => {
             if(status=="INTERVIEWING")successNotification('Interview Scheduled',  'Interview has been scheduled successfully');
             else if(status=="OFFERED")successNotification('Offered',  'Offer has been sent successfully');
             else successNotification('Rejected',  'Offer has been rejected');
-            window.location.reload();
+            
+            // Плавное обновление вместо перезагрузки страницы
+            if (props.onStatusChange) {
+                props.onStatusChange(profile?.id, status);
+            }
+            
+            // Закрываем модальное окно если оно открыто
+            if (status === "INTERVIEWING") {
+                close();
+            }
         }).catch((err) => {
             console.log(err)
             errorNotification('Error', err.response.data.errorMessage);
@@ -104,17 +113,25 @@ const TalentCard = (props: any) => {
             }{
 
                 props.invited && <>
-                    <div>
+                    <div className="w-1/2">
 
-                        <Button onClick={()=>handleOffer("OFFERED")} color="brightSun.4" variant="outline" fullWidth>Accept</Button>
+                        <Button onClick={()=>handleOffer("OFFERED")} color="green" variant="filled" fullWidth>Accept</Button>
                     </div>
-                    <div>
+                    <div className="w-1/2">
 
-                        <Button onClick={()=>handleOffer("REJECTED")} color="brightSun.4" variant="light" fullWidth>Reject</Button>
+                        <Button onClick={()=>handleOffer("REJECTED")} color="red" variant="filled" fullWidth>Reject</Button>
                     </div>
                 </>
             }
         </div>
+        
+        {/* Индикатор принятого предложения */}
+        {props.invited && props.applicationStatus === "ACCEPTED" && (
+            <div className="flex gap-1 text-sm items-center justify-center text-green-400 font-semibold">
+                <span>✓</span> Final Candidate
+            </div>
+        )}
+        
             {(props.invited || props.posted) && <Button color="brightSun.4" variant="filled" onClick={openApp} autoContrast fullWidth>View Application</Button>}
         <Modal opened={opened} onClose={close} radius="lg" title="Schedule Interview" centered>
             <div className="flex flex-col gap-4">
