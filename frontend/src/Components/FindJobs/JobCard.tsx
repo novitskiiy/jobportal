@@ -23,7 +23,14 @@ const JobCard = (props: any) => {
         <div className="flex justify-between">
             <div className="flex gap-2 items-center">
                 <div className="p-2 bg-mine-shaft-800 rounded-md">
-                    <img className="h-7" src={`/Icons/${props.company}.png`} alt="" />
+                    <img 
+                        className="h-7" 
+                        src={`/Icons/${props.company}.png`} 
+                        alt={`${props.company} logo`}
+                        onError={(e) => {
+                            e.currentTarget.src = '/Icons/Google.png'; // fallback to Google icon
+                        }}
+                    />
                 </div>
                 <div className="flex flex-col gap-1">
                     <div className="font-semibold ">{props.jobTitle}</div>

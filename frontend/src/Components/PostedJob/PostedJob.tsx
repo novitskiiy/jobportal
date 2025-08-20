@@ -77,6 +77,7 @@ const PostedJob = (props:any) => {
         
         // Если это изменение статуса заявки
         if (update.type === "NEW_APPLICATION" || update.type === "APPLICATION_STATUS") {
+        
             // Обновляем список вакансий при изменении статуса заявки
             setJobList((prevJobList: any[]) => {
                 return prevJobList.map((job: any) => {

@@ -84,7 +84,14 @@ const Job = (props:any) => {
         <div className="flex justify-between items-center flex-wrap">
             <div className="flex items-center gap-2">
                 <div className="p-3 bg-mine-shaft-800 rounded-xl shrink-0 flex ">
-                    <img className="h-14 xs-mx:h-10 xs-mx:w-10" src={`/Icons/${props.company}.png`} alt="" />
+                    <img 
+                        className="h-14 xs-mx:h-10 xs-mx:w-10" 
+                        src={`/Icons/${props.company}.png`} 
+                        alt={`${props.company} logo`}
+                        onError={(e) => {
+                            e.currentTarget.src = '/Icons/Google.png'; // fallback to Google icon
+                        }}
+                    />
                 </div>
                 <div className="flex flex-col gap-1">
                     <div className="font-semibold text-2xl xs-mx:text-xl">{props.jobTitle}</div>
@@ -132,14 +139,23 @@ const Job = (props:any) => {
             <div className="text-xl font-semibold mb-5">About Company</div>
             <div className="flex items-center gap-2 mb-3">
                 <div className="p-3 bg-mine-shaft-800 rounded-xl flex ">
-                    <img className="h-8" src={`/Icons/${props.company}.png`} alt="" />
+                                            <img 
+                            className="h-8" 
+                            src={`/Icons/${props.company}.png`} 
+                            alt={`${props.company} logo`}
+                            onError={(e) => {
+                                e.currentTarget.src = '/Icons/Google.png'; // fallback to Google icon
+                            }}
+                        />
                 </div>
                 <div>
                     <div className="text-lg font-medium">{props.company}</div>
                     <div className="text-mine-shaft-300">10k+ Employees</div>
                 </div>
             </div>
-            <div className="text-mine-shaft-300 text-justify xs-mx:text-sm">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo fuga recusandae perferendis, excepturi nostrum debitis. Accusantium dolorum corrupti et mollitia unde? Possimus vero nemo maxime vitae impedit? Nisi, quos in. Facilis maiores in nostrum qui animi delectus architecto iste quidem soluta. Illo aspernatur saepe dolores minus soluta? Molestias, delectus eveniet.</div>
+            <div className="text-mine-shaft-300 text-justify xs-mx:text-sm">
+                {props.about || `${props.company} is a leading technology company focused on innovation and growth. We are committed to creating exceptional products and services that make a difference in people's lives. Our team consists of talented professionals who are passionate about their work and dedicated to achieving excellence in everything we do.`}
+            </div>
         </div>
     </div>
 }
