@@ -132,7 +132,19 @@ const TalentCard = (props: any) => {
             </div>
         )}
         
+        {/* Индикатор подтверждения оффера в разделе Offered */}
+        {props.offered && props.applicationStatus === "ACCEPTED" && (
+            <div className="flex gap-1 text-sm items-center justify-center text-green-400 font-semibold">
+                <span>✓</span> Candidate confirmed offer
+            </div>
+        )}
+        
             {(props.invited || props.posted) && <Button color="brightSun.4" variant="filled" onClick={openApp} autoContrast fullWidth>View Application</Button>}
+            {props.invited && (
+                <Link to="/employer-interview" className="w-full">
+                    <Button color="brightSun.4" variant="outline" fullWidth>Join Interview</Button>
+                </Link>
+            )}
         <Modal opened={opened} onClose={close} radius="lg" title="Schedule Interview" centered>
             <div className="flex flex-col gap-4">
                 <DateInput value={date} onChange={setDate} minDate={new Date()} label="Date" placeholder="Enter Date" />

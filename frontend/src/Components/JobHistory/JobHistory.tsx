@@ -184,7 +184,7 @@ const JobHistory = () => {
             setShowList(filterJobsByStatus(res, 'APPLIED'));
         }).catch((err) => console.log(err))
         .finally(() => dispatch(hideOverlay()));
-    }, [filterJobsByStatus]);
+    }, [filterJobsByStatus, user.id]);
 
     // Отслеживаем изменения showList для отладки
     useEffect(() => {

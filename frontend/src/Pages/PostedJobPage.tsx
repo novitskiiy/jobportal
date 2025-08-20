@@ -232,7 +232,7 @@ const PostedJobPage = () => {
             })
             .catch((err)=>console.log(err))
             .finally(()=>dispatch(hideOverlay()));
-    }, [])
+    }, [user.id, id, navigate])
 
     // При смене id просто выбираем вакансию из уже загруженного списка
     useEffect(()=>{

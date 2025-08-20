@@ -88,7 +88,7 @@ const PostedJobDesc = (props:any) => {
                 // Если новый статус соответствует текущей вкладке, добавляем обратно
                 if ((tab === "applicants" && update.newStatus === "APPLIED") ||
                     (tab === "invited" && update.newStatus === "INTERVIEWING") ||
-                    (tab === "offered" && update.newStatus === "OFFERED") ||
+                    (tab === "offered" && (update.newStatus === "OFFERED" || update.newStatus === "ACCEPTED")) ||
                     (tab === "rejected" && update.newStatus === "REJECTED")) {
                     
                     const updatedApplicant = applicants.find((app: any) => app.applicantId === update.applicantId);
@@ -97,8 +97,8 @@ const PostedJobDesc = (props:any) => {
                     }
                 }
                 
-                // Для статусов ACCEPTED и REJECTED не добавляем обратно в текущий список
-                // так как они должны исчезнуть из вкладки "Offered"
+                // Для статуса REJECTED не добавляем обратно в текущий список
+                // Для ACCEPTED оставляем в разделе "Offered"
                 
                 return filteredArr;
             });
@@ -116,7 +116,7 @@ const PostedJobDesc = (props:any) => {
                     // Обновляем отображаемый список для текущей вкладки
                     if (tab === "offered") {
                         // Убираем кандидата из вкладки "Offered" полностью
-                        setArr(updatedApplicants.filter((x: any) => x.applicationStatus === "OFFERED"));
+                        setArr(updatedApplicants.filter((x: any) => x.applicationStatus === "OFFERED" || x.applicationStatus === "ACCEPTED"));
                     } else if (tab === "rejected") {
                         setArr(updatedApplicants.filter((x: any) => x.applicationStatus === "REJECTED"));
                     }
@@ -157,7 +157,7 @@ const PostedJobDesc = (props:any) => {
             // Если новый статус соответствует текущей вкладке, добавляем обратно
             if ((tab === "applicants" && newStatus === "APPLIED") ||
                 (tab === "invited" && newStatus === "INTERVIEWING") ||
-                (tab === "offered" && newStatus === "OFFERED") ||
+                (tab === "offered" && (newStatus === "OFFERED" || newStatus === "ACCEPTED")) ||
                 (tab === "rejected" && newStatus === "REJECTED")) {
                 
                 const updatedApplicant = applicants.find((app: any) => app.applicantId === applicantId);
@@ -166,8 +166,8 @@ const PostedJobDesc = (props:any) => {
                 }
             }
             
-            // Для статусов ACCEPTED и REJECTED не добавляем обратно в текущий список
-            // так как они должны исчезнуть из вкладки "Offered"
+            // Для статуса REJECTED не добавляем обратно в текущий список
+            // Для ACCEPTED оставляем в разделе "Offered"
             
             return filteredArr;
         });
@@ -185,7 +185,7 @@ const PostedJobDesc = (props:any) => {
                 // Обновляем отображаемый список для текущей вкладки
                 if (tab === "offered") {
                     // Убираем кандидата из вкладки "Offered" полностью
-                    setArr(updatedApplicants.filter((x: any) => x.applicationStatus === "OFFERED"));
+                    setArr(updatedApplicants.filter((x: any) => x.applicationStatus === "OFFERED" || x.applicationStatus === "ACCEPTED"));
                 } else if (tab === "rejected") {
                     setArr(updatedApplicants.filter((x: any) => x.applicationStatus === "REJECTED"));
                 }
@@ -199,7 +199,7 @@ const PostedJobDesc = (props:any) => {
         setTab(value);
         if(value=="applicants")setArr(applicants?.filter((x:any)=>x.applicationStatus=="APPLIED"));
         else if(value=="invited")setArr(applicants?.filter((x:any)=>x.applicationStatus=="INTERVIEWING"));
-        else if(value=="offered")setArr(applicants?.filter((x:any)=>x.applicationStatus=="OFFERED"));
+        else if(value=="offered")setArr(applicants?.filter((x:any)=>x.applicationStatus=="OFFERED" || x.applicationStatus=="ACCEPTED"));
         else if(value=="rejected")setArr(applicants?.filter((x:any)=>x.applicationStatus=="REJECTED"));
     }
     
