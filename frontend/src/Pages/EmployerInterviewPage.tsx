@@ -1,14 +1,51 @@
 import React from 'react';
 import { Button } from '@mantine/core';
 import { IconVideo, IconMicrophone, IconMicrophoneOff, IconVideoOff, IconPhone, IconPhoneOff, IconUser, IconUsers } from '@tabler/icons-react';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const EmployerInterviewPage = () => {
     const navigate = useNavigate();
+    const { id: jobId } = useParams();
+    const location = useLocation();
+    const user = useSelector((state: any) => state.user);
     const [isVideoOn, setIsVideoOn] = useState(true);
     const [isAudioOn, setIsAudioOn] = useState(true);
     const [isInCall, setIsInCall] = useState(false);
+    
+    // Получаем данные кандидата из состояния навигации или из URL параметров
+    const [candidateData, setCandidateData] = useState<any>(null);
+    const [jobData, setJobData] = useState<any>(null);
+
+    // Загружаем данные кандидата и вакансии
+    useEffect(() => {
+        // Если данные переданы через состояние навигации
+        if (location.state?.candidateData) {
+            setCandidateData(location.state.candidateData);
+        }
+        if (location.state?.jobData) {
+            setJobData(location.state.jobData);
+        }
+        
+        // Если данные не переданы, можно загрузить их по jobId и applicantId из URL
+        // Это можно реализовать позже, когда будет необходимость
+    }, [location.state]);
+
+    // Дефолтные данные на случай, если данные не загружены
+    const defaultCandidate = {
+        name: "Кандидат",
+        jobTitle: "Позиция",
+        company: "Компания"
+    };
+
+    const defaultJob = {
+        jobTitle: "Вакансия",
+        company: "Компания"
+    };
+
+    const candidate = candidateData || defaultCandidate;
+    const job = jobData || defaultJob;
 
     const toggleVideo = () => {
         setIsVideoOn(!isVideoOn);
@@ -47,8 +84,8 @@ const EmployerInterviewPage = () => {
                     <div className="bg-mine-shaft-900 rounded-lg p-4 mb-6">
                         <div className="flex items-center justify-between">
                             <div>
-                                <h2 className="text-lg font-semibold text-white mb-2">Interview with Ksenia</h2>
-                                <p className="text-mine-shaft-300">Marketing Specialist Position • Netflix</p>
+                                <h2 className="text-lg font-semibold text-white mb-2">Interview with {candidate.name}</h2>
+                                <p className="text-mine-shaft-300">{job.jobTitle} Position • {job.company}</p>
                                 <p className="text-mine-shaft-400 text-sm">Scheduled for: Sun, 25 August • 10 AM - 11 AM</p>
                             </div>
                             <div className="text-right">
@@ -111,7 +148,7 @@ const EmployerInterviewPage = () => {
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center gap-2">
                                         <IconUser className="text-ocean-blue-400" size={20} />
-                                        <span className="text-white font-medium">Ksenia (Candidate)</span>
+                                        <span className="text-white font-medium">{candidate.name} (Candidate)</span>
                                     </div>
                                 </div>
                                 <div className="flex-1 bg-mine-shaft-800 rounded-lg flex items-center justify-center">
@@ -120,7 +157,7 @@ const EmployerInterviewPage = () => {
                                             <IconUser size={32} className="text-white" />
                                         </div>
                                         <p className="text-mine-shaft-300">Waiting for candidate...</p>
-                                        <p className="text-mine-shaft-400 text-sm">Product Manager • Netflix</p>
+                                        <p className="text-mine-shaft-400 text-sm">{candidate.jobTitle} • {candidate.company}</p>
                                     </div>
                                 </div>
                             </div>

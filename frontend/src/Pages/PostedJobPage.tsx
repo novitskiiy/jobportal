@@ -124,6 +124,7 @@ const PostedJobPage = () => {
         
         // Если это новая заявка или изменение статуса для вакансии в нашем списке
         if (update.type === "NEW_APPLICATION" || update.type === "APPLICATION_STATUS") {
+            console.log(`PostedJobPage: Получено обновление типа ${update.type}:`, update);
             setJobList((prevJobList: any[]) => {
                 return prevJobList.map((jobItem: any) => {
                     if (jobItem.id === update.jobId) {
