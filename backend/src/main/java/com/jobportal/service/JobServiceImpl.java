@@ -29,6 +29,8 @@ public class JobServiceImpl implements JobService {
 	private NotificationService notificationService;
 	@Autowired
 	private WebSocketNotificationService webSocketNotificationService;
+	@Autowired
+	private LeaderboardService leaderboardService;
 
 	@Override
 	public JobDTO postJob(JobDTO jobDTO) throws JobPortalException {
@@ -56,6 +58,10 @@ public class JobServiceImpl implements JobService {
 			}
 		}
 		jobRepository.save(jobDTO.toEntity());
+		
+		// Обновляем leaderboard для работодателя
+		updateEmployerLeaderboard(jobDTO.getPostedBy());
+		
 		return jobDTO;
 	}
 
@@ -287,6 +293,27 @@ public class JobServiceImpl implements JobService {
 		// Удаляем вакансию из базы данных
 		jobRepository.delete(job);
 		System.out.println("JobServiceImpl: Вакансия " + jobId + " удалена из базы данных");
+		
+		// Обновляем leaderboard для работодателя после удаления вакансии
+		updateEmployerLeaderboard(job.getPostedBy());
+	}
+
+	/**
+	 * Обновляет leaderboard для работодателя
+	 * @param employerId ID работодателя
+	 */
+	private void updateEmployerLeaderboard(Long employerId) {
+		try {
+			// Подсчитываем количество активных вакансий работодателя
+			long jobCount = jobRepository.findByPostedBy(employerId).stream()
+					.filter(job -> !job.getJobStatus().equals(JobStatus.CLOSED))
+					.count();
+			
+			// Обновляем leaderboard
+			leaderboardService.updateEmployerJobCount(employerId.toString(), jobCount);
+		} catch (Exception e) {
+			System.err.println("Error updating leaderboard for employer " + employerId + ": " + e.getMessage());
+		}
 	}
 
 }

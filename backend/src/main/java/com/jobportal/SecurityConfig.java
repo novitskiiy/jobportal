@@ -37,6 +37,7 @@ public class SecurityConfig {
                     "/users/verifyOtp/**",
                     "/users/sendOtp/**",
                     "/users/changePass",
+                    "/api/leaderboard/**",
                     "/swagger-ui.html",
                     "/swagger-ui/**",
                     "/v3/api-docs/**",

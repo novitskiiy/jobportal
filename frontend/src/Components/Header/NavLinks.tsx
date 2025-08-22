@@ -29,7 +29,8 @@ const NavLinks = () => {
     } else if (accountType === 'APPLICANT') {
         links = [
             { name: "Find Jobs", url: "find-jobs" },
-            { name: "Job History", url: "job-history" }
+            { name: "Job History", url: "job-history" },
+            { name: "Leaderboard", url: "leaderboard" }
         ];
     }
     

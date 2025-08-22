@@ -22,6 +22,7 @@ import Unauthorized from './UnauthroizedPage';
 import NotFoundPage from './NotFoundPage';
 import InterviewPage from './InterviewPage';
 import EmployerInterviewPage from './EmployerInterviewPage';
+import LeaderboardPage from './LeaderboardPage';
 import { LoadingOverlay } from '@mantine/core';
 
 const AppRoutes = () => {
@@ -49,6 +50,7 @@ const AppRoutes = () => {
         <Route path='/talent-profile/:id' element={<ProtectedRoute allowedRoles={['EMPLOYER']}><TalentProfilePage /></ProtectedRoute>} />
 
         <Route path='/job-history' element={<ProtectedRoute allowedRoles={['APPLICANT']}><JobHistoryPage /></ProtectedRoute>} />
+        <Route path='/leaderboard' element={<ProtectedRoute allowedRoles={['APPLICANT']}><LeaderboardPage /></ProtectedRoute>} />
         <Route path='/interview' element={<ProtectedRoute allowedRoles={['APPLICANT']}><InterviewPage /></ProtectedRoute>} />
         <Route path='/employer-interview' element={<ProtectedRoute allowedRoles={['EMPLOYER']}><EmployerInterviewPage /></ProtectedRoute>} />
         <Route path='/posted-jobs' element={<ProtectedRoute allowedRoles={['EMPLOYER']}><PostedJobPage /></ProtectedRoute>} />
