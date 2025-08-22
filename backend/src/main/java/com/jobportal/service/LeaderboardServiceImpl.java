@@ -66,7 +66,6 @@ public class LeaderboardServiceImpl implements LeaderboardService {
                         EmployerLeaderboardDTO dto = new EmployerLeaderboardDTO();
                         dto.setEmployerId(employerId);
                         dto.setEmployerName(user.getName() != null ? user.getName() : "Unknown User");
-                        dto.setCompanyName("Unknown Company"); // Можно добавить поле companyName в User entity позже
                         dto.setJobCount(jobCount);
                         dto.setRank(rank);
                         dto.setAvatar("/avatar.png"); // Можно добавить поле avatar в User entity позже

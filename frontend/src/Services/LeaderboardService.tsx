@@ -3,7 +3,6 @@ import axios from 'axios';
 export interface EmployerLeaderboard {
   employerId: string;
   employerName: string;
-  companyName: string;
   jobCount: number;
   rank: number;
   avatar: string;

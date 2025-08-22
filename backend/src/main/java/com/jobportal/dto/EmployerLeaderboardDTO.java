@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 public class EmployerLeaderboardDTO {
     private String employerId;
     private String employerName;
-    private String companyName;
     private Long jobCount;
     private Integer rank;
     private String avatar;

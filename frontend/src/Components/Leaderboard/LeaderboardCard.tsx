@@ -58,9 +58,6 @@ const LeaderboardCard: React.FC<LeaderboardCardProps> = ({ employer }) => {
           <h3 className="text-lg font-semibold text-gray-900 truncate">
             {employer.employerName}
           </h3>
-          <p className="text-sm text-gray-600 truncate">
-            {employer.companyName}
-          </p>
           <div className="flex items-center mt-2">
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
               {employer.jobCount} {employer.jobCount === 1 ? 'job' : 'jobs'} posted
