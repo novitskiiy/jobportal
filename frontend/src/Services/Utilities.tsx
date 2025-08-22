@@ -55,7 +55,14 @@ const openPDF=(base64: string)=>{
   }
 }
 const formatInterviewTime=(dateString:string)=>{
+  if (!dateString) return "Date not set";
+  
   const date = new Date(dateString);
+  
+  // Проверяем, что дата валидна
+  if (isNaN(date.getTime())) {
+    return "Invalid date";
+  }
 
 const options: Intl.DateTimeFormatOptions = {
   year: 'numeric',

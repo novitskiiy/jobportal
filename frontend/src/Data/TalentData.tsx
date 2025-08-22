@@ -114,11 +114,19 @@ const talents = [
         description: "As a Software Engineer at Google, I am responsible for designing, developing, and maintaining scalable software solutions that enhance user experience and improve operational efficiency. My role involves collaborating with cross-functional teams to define project requirements, develop technical specifications, and implement robust applications using cutting-edge technologies. I actively participate in code reviews, ensuring adherence to best practices and coding standards, and contribute to the continuous improvement of the development process."
       },
       {
+        title: "Frontend Developer",
+        company: "Facebook",
+        location: "San Francisco, United States",
+        startDate: "Jan 2020",
+        endDate: "Mar 2022",
+        description: "At Facebook, I specialized in developing responsive and interactive user interfaces using React and modern JavaScript frameworks. I worked on improving user experience across multiple platforms and collaborated with design teams to implement pixel-perfect designs. My role involved optimizing frontend performance, ensuring cross-browser compatibility, and maintaining high code quality standards."
+      },
+      {
         title: "Software Engineer",
         company: "Microsoft",
         location: "Seattle, United States",
         startDate: "Jun 2018",
-        endDate: "Mar 2022",
+        endDate: "Dec 2019",
         description: "At Microsoft, I worked on developing and optimizing cloud-based applications, focusing on enhancing performance and scalability. I collaborated with product managers and designers to create innovative features that improved user engagement. My responsibilities included writing clean, maintainable code, performing code reviews, and mentoring junior developers. I played a key role in migrating legacy applications to modern cloud infrastructure, resulting in significant cost savings and improved efficiency."
       }
     ],
@@ -128,6 +136,12 @@ const talents = [
         issuer: "Google",
         issueDate: "Aug 2023",
         certificateId: "CB72982GG"
+      },
+      {
+        name: "Facebook React Developer Certification",
+        issuer: "Facebook",
+        issueDate: "Mar 2022",
+        certificateId: "FB98765RE"
       },
       {
         name: "Microsoft Certified: Azure Solutions Architect Expert",

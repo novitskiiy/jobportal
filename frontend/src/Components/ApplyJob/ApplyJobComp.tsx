@@ -8,11 +8,18 @@ const ApplyJobComp = (props:any) => {
         <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
                 <div className="p-3 bg-mine-shaft-800 rounded-xl flex shrink-0 ">
-                    <img className="h-14  xs-mx:h-10 xs-mx:w-10" src={`/Icons/${props.company}.png`} alt="" />
+                    <img 
+                    className="h-14  xs-mx:h-10 xs-mx:w-10" 
+                    src={`/Icons/${props.company}.png`} 
+                    alt={`${props.company} logo`}
+                    onError={(e) => {
+                        e.currentTarget.src = '/Icons/Google.png'; // fallback to Google icon
+                    }}
+                />
                 </div>
                 <div className="flex flex-col gap-1">
                     <div className="font-semibold text-2xl  xs-mx:text-xl">{props.jobTitle}</div>
-                    <div className="text-lg text-mine-shaft-300 flex-wrap xs-mx:text-base"><span>{props.company} &bull; </span><span> {timeAgo(props.postTime||"")} &bull; </span> <span>{props.applicants?props.applicants.length:0} Applicants </span></div>
+                    <div className="text-lg text-mine-shaft-300 flex-wrap xs-mx:text-base"><span>{props.company}</span></div>
                 </div>
             </div>
         </div>

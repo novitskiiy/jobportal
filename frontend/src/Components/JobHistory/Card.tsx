@@ -37,8 +37,11 @@ const Card = (props: any) => {
             } else {
                 successNotification("Offer Rejected", "You have rejected the job offer.");
             }
-            // Обновляем страницу для отображения изменений
-            window.location.reload();
+            
+            // Плавное обновление вместо перезагрузки страницы
+            if (props.onStatusChange) {
+                props.onStatusChange(props.id, status);
+            }
         } catch (err: any) {
             errorNotification("Error", err.response?.data?.errorMessage || "Failed to respond to offer");
         }
@@ -47,7 +50,14 @@ const Card = (props: any) => {
         <div className="flex justify-between">
             <div className="flex gap-2 items-center">
                 <div className="p-2 bg-mine-shaft-800 rounded-md">
-                    <img className="h-7" src={`/Icons/${props.company}.png`} alt="" />
+                    <img 
+                        className="h-7" 
+                        src={`/Icons/${props.company}.png`} 
+                        alt={`${props.company} logo`}
+                        onError={(e) => {
+                            e.currentTarget.src = '/Icons/Google.png'; // fallback to Google icon
+                        }}
+                    />
                 </div>
                 <div className="flex flex-col gap-1">
                     <div className="font-semibold ">{props.jobTitle}</div>
@@ -75,8 +85,12 @@ const Card = (props: any) => {
         {(props.offered || props.interviewing || props.accepted) && <Divider color="mineShaft.7" size="xs" />}
         {props.offered &&
         <div className="flex gap-2">
-            <Button color="brightSun.4" variant="outline" fullWidth onClick={() => handleRespondToOffer("ACCEPTED")}>Accept</Button>
-            <Button color="brightSun.4" variant="light" fullWidth onClick={() => handleRespondToOffer("REJECTED")}>Reject</Button>
+            <div className="w-1/2">
+                <Button color="green" variant="filled" fullWidth onClick={() => handleRespondToOffer("ACCEPTED")}>Accept</Button>
+            </div>
+            <div className="w-1/2">
+                <Button color="red" variant="filled" fullWidth onClick={() => handleRespondToOffer("REJECTED")}>Reject</Button>
+            </div>
         </div>
         }
         {props.accepted &&
@@ -87,9 +101,16 @@ const Card = (props: any) => {
         {props.interviewing &&<div className="flex gap-1 text-sm">
                         <IconCalendarMonth className=" text-ocean-blue-400 w-5 h-5" stroke={1.5} /> Sun, 25 August &bull; <span className="text-mine-shaft-400">10 AM - 11 AM</span>
         </div>}
-        <Link  to={`/jobs/${props.id}`}>
-        <Button color="brightSun.4" variant="light" fullWidth>View Job</Button>
-        </Link>
+        <div className="flex gap-2">
+            <Link to={`/jobs/${props.id}`} className="flex-1">
+                <Button color="brightSun.4" variant="light" fullWidth>View Job</Button>
+            </Link>
+            {props.interviewing && (
+                <Link to="/interview" className="flex-1">
+                    <Button color="brightSun.4" variant="outline" fullWidth>Join Interview</Button>
+                </Link>
+            )}
+        </div>
     </div>
 }
 export default Card;

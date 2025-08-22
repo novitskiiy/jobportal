@@ -5,7 +5,14 @@ const CertiCard = (props:any) => {
         <div className="flex justify-between sm-mx:flex-wrap gap-2">
             <div className="flex gap-2 items-center">
                 <div className="p-2 bg-mine-shaft-800 rounded-md shrink-0">
-                    <img className="h-7" src={`/Icons/${props.issuer}.png`} alt="" />
+                    <img 
+                        className="h-7" 
+                        src={`/Icons/${props.issuer}.png`} 
+                        alt={`${props.issuer} logo`}
+                        onError={(e) => {
+                            e.currentTarget.src = '/Icons/Google.png'; // fallback to Google icon
+                        }}
+                    />
                 </div>
                 <div className="flex flex-col">
                     <div className="font-semibold xs-mx:text-xs">{props.name}</div>

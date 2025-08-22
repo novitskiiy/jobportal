@@ -9,6 +9,18 @@ const dropdownData = [
 
 const jobList = [
     {
+      jobTitle: "Frontend Developer",
+      company: "Facebook",
+      applicants: 35,
+      experience: "Intermediate",
+      jobType: "Full-Time",
+      location: "San Francisco",
+      package: "$95K",
+      postedDaysAgo: 3,
+      description: "Facebook is seeking a Frontend Developer to join our team. You'll be working on developing responsive and interactive user interfaces using React and modern JavaScript frameworks. This role involves optimizing frontend performance and ensuring cross-browser compatibility.",
+      about: "Facebook is a leading technology company focused on connecting people and building communities. We are committed to creating innovative products that bring the world closer together. Our team consists of talented professionals who are passionate about their work and dedicated to achieving excellence in everything we do."
+    },
+    {
       jobTitle: "Product Designer",
       company: "Meta",
       applicants: 25,
@@ -17,7 +29,8 @@ const jobList = [
       location: "New York",
       package: "$80K",
       postedDaysAgo: 12,
-      description: "Meta is seeking a Product Designer to join our team. You'll be working on designing user-centric interfaces for our blockchain wallet platform. This is an excellent opportunity for entry-level designers to grow their skills in a dynamic environment."
+      description: "Meta is seeking a Product Designer to join our team. You'll be working on designing user-centric interfaces for our blockchain wallet platform. This is an excellent opportunity for entry-level designers to grow their skills in a dynamic environment.",
+      about: "Meta is a technology company focused on building the metaverse and connecting people through innovative platforms. We are committed to creating immersive experiences that bring people together in new and meaningful ways. Our team consists of creative professionals who are passionate about shaping the future of social technology."
     },
     {
       jobTitle: "Sr. UX Designer",
@@ -28,7 +41,8 @@ const jobList = [
       location: "San Francisco",
       package: "$100K",
       postedDaysAgo: 5,
-      description: "Netflix is looking for a Sr. UX Designer to enhance our user experience on streaming platforms. Ideal candidates will have extensive experience in user research and interaction design, helping us to deliver engaging content to our global audience."
+      description: "Netflix is looking for a Sr. UX Designer to enhance our user experience on streaming platforms. Ideal candidates will have extensive experience in user research and interaction design, helping us to deliver engaging content to our global audience.",
+      about: "Netflix is a leading streaming entertainment service with millions of members worldwide. We are committed to providing the best entertainment experience through innovative technology and creative content. Our team consists of talented professionals who are passionate about delivering exceptional user experiences."
     },
     {
       jobTitle: "Product Designer",
