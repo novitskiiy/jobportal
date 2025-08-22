@@ -8,9 +8,10 @@ import { getJob, postJob } from "../../Services/JobService";
 import { errorNotification, successNotification } from "../../Services/NotificationService";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useMediaQuery } from "@mantine/hooks";
 import { hideOverlay, showOverlay } from "../../Slices/OverlaySlice";
+import BasicAIHelper, { BasicAIHelperRef } from "../AI/BasicAIHelper";
 
 const PostJob = () => {
     const {id}=useParams();
@@ -19,6 +20,7 @@ const PostJob = () => {
     const navigate = useNavigate();
     const select = fields;
     const [editorData,setEditorData]=useState(content);
+    const aiHelperRef = useRef<BasicAIHelperRef>(null);
     // const matches = useMediaQuery('(min-width: 350px)');
     useEffect(()=>{
         window.scrollTo(0,0);
@@ -87,6 +89,25 @@ const PostJob = () => {
             errorNotification("Error", err.response.data.errorMessage);
         }).finally(()=>dispatch(hideOverlay()));
     }
+
+    const handleGenerateDescription = () => {
+        if (!form.values.jobTitle.trim()) {
+            errorNotification("Error", "Please enter a job title first");
+            return;
+        }
+
+        const formData = {
+            jobTitle: form.values.jobTitle,
+            skillsRequired: form.values.skillsRequired,
+            experience: form.values.experience,
+            company: form.values.company,
+            location: form.values.location,
+            jobType: form.values.jobType,
+            packageOffered: form.values.packageOffered ? Number(form.values.packageOffered) : 0
+        };
+
+        aiHelperRef.current?.generateDescription(formData);
+    }
     return <div data-aos="zoom-out" className="px-16 bs-mx:px-10 md-mx:px-5 py-5 ">
         <div className="text-2xl font-semibold mb-5">Post a Job</div>
         <div className="flex flex-col gap-5">
@@ -104,13 +125,61 @@ const PostJob = () => {
             </div>
             <TagsInput data-aos="zoom-out"  {...form.getInputProps("skillsRequired")} withAsterisk label="Skills" placeholder="Enter skill" splitChars={[',', ' ', '|']} clearable />
             <Textarea data-aos="zoom-out"  {...form.getInputProps("about")} withAsterisk className="my-3" label="About Job" autosize minRows={2} placeholder="Enter about job.." />
+            
+            {/* Hidden AI Helper Component */}
+            <BasicAIHelper
+                ref={aiHelperRef}
+                onDescriptionGenerated={(description) => {
+                    form.setFieldValue('description', description);
+                    setEditorData(description);
+                }}
+                onAboutGenerated={(about) => {
+                    form.setFieldValue('about', about);
+                }}
+            />
+            
             <div className="[&_button[data-active='true']]:!text-ocean-blue-400 [&_button[data-active='true']]:!bg-ocean-blue-400/20">
                 <div className="text-sm font-medium ">Job Description<span className="text-red-600 "> *</span></div>
                 <TextEditor data-aos="zoom-out"  form={form} data={editorData}/>
             </div>
-            <div   className="flex gap-4">
-                <Button data-aos="zoom-out" color="brightSun.4" onClick={handlePost} variant="light">Publish Job</Button>
-                <Button data-aos="zoom-out" color="brightSun.4" onClick={handleDraft} variant="outline">Save as Draft</Button>
+            <div className="flex gap-4 justify-between">
+                <div className="flex gap-4">
+                    <Button data-aos="zoom-out" color="brightSun.4" onClick={handlePost} variant="light">Publish Job</Button>
+                    <Button data-aos="zoom-out" color="brightSun.4" onClick={handleDraft} variant="outline">Save as Draft</Button>
+                </div>
+                <button
+                    onClick={handleGenerateDescription}
+                    style={{
+                        backgroundColor: '#6366f1',
+                        color: 'white',
+                        border: 'none',
+                        padding: '10px 20px',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        boxShadow: '0 2px 4px rgba(99, 102, 241, 0.2)',
+                        transition: 'all 0.2s ease'
+                    }}
+                    onMouseOver={(e) => {
+                        const target = e.target as HTMLButtonElement;
+                        target.style.backgroundColor = '#4f46e5';
+                        target.style.transform = 'translateY(-1px)';
+                        target.style.boxShadow = '0 4px 8px rgba(99, 102, 241, 0.3)';
+                    }}
+                    onMouseOut={(e) => {
+                        const target = e.target as HTMLButtonElement;
+                        target.style.backgroundColor = '#6366f1';
+                        target.style.transform = 'translateY(0)';
+                        target.style.boxShadow = '0 2px 4px rgba(99, 102, 241, 0.2)';
+                    }}
+                >
+                    <span>🧙‍♂️</span>
+                    Generate Description
+                </button>
             </div>
         </div>
     </div>
