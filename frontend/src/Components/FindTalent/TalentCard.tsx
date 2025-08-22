@@ -47,9 +47,13 @@ const TalentCard = (props: any) => {
     }
     useEffect(()=>{
         if(props.applicantId)getProfile(props.applicantId).then((res)=>{
+            console.log(`TalentCard: Загружен профиль кандидата:`, res);
             setProfile(res);
         }).catch((err)=>console.log(err))
-        else setProfile(props);
+        else {
+            console.log(`TalentCard: Используем данные из props:`, props);
+            setProfile(props);
+        }
     }, [props])
     return <div data-aos="fade-up" className="p-4 rounded-xl bg-mine-shaft-900   hover:shadow-[0_0_5px_1px_#3b82f6] !shadow-ocean-blue-400  transition duration-300 ease-in-out w-96 bs-mx:w-[48%] md-mx:w-full flex flex-col gap-3">
         <div className="flex justify-between">
@@ -58,7 +62,7 @@ const TalentCard = (props: any) => {
                     <Avatar className="rounded-full" size="lg" src={profile?.picture?`data:image/jpeg;base64,${profile?.picture}`:'/Avatar.png'} />
                 </div>
                 <div className="flex flex-col gap-1">
-                    <div className="font-semibold text-lg">{props?.name}</div>
+                    <div className="font-semibold text-lg">{profile?.name || props?.name}</div>
                     <div className="text-sm text-mine-shaft-300">{profile?.jobTitle} &bull; {profile?.company}</div>
 
                 </div>
@@ -141,7 +145,21 @@ const TalentCard = (props: any) => {
         
             {(props.invited || props.posted) && <Button color="brightSun.4" variant="filled" onClick={openApp} autoContrast fullWidth>View Application</Button>}
             {props.invited && (
-                <Link to="/employer-interview" className="w-full">
+                <Link 
+                    to="/employer-interview" 
+                    state={{ 
+                        candidateData: {
+                            name: profile?.name || props?.name,
+                            jobTitle: profile?.jobTitle,
+                            company: profile?.company
+                        },
+                        jobData: {
+                            jobTitle: props.jobTitle,
+                            company: props.company
+                        }
+                    }}
+                    className="w-full"
+                >
                     <Button color="brightSun.4" variant="outline" fullWidth>Join Interview</Button>
                 </Link>
             )}
@@ -162,7 +180,7 @@ const TalentCard = (props: any) => {
                     Website: &emsp;<a className="text-ocean-blue-400 hover:underline cursor-pointer " target="_blank" href={props.website}>{props.website}</a>
                 </div>
                 <div >
-                    Resume: &emsp;<span className="text-ocean-blue-400 hover:underline cursor-pointer" onClick={()=>openPDF(props.resume)}>{props.name}</span>
+                    Resume: &emsp;<span className="text-ocean-blue-400 hover:underline cursor-pointer" onClick={()=>openPDF(props.resume)}>{profile?.name || props.name}</span>
                     
                 </div>
                 <div  >

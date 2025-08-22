@@ -14,6 +14,7 @@ const PostedJobDesc = (props:any) => {
     // Обработчик обновления статусов
     const handleStatusUpdate = useCallback((update: StatusUpdate) => {
         console.log(`Получено обновление статуса в PostedJobDesc: ${update.oldStatus} → ${update.newStatus} для заявки ${update.jobId}`);
+        console.log(`PostedJobDesc: Полные данные обновления:`, update);
         
         // Если это новая заявка для текущей вакансии
         if (update.jobId === props.id && update.type === "NEW_APPLICATION") {
@@ -35,6 +36,7 @@ const PostedJobDesc = (props:any) => {
                         resume: update.applicantResume,
                         coverLetter: update.applicantCoverLetter,
                     };
+                    console.log(`PostedJobDesc: Добавляем нового кандидата с данными:`, newApplicant);
                     console.log(`Добавляем нового кандидата:`, newApplicant);
                     console.log(`PostedJobDesc: Полученные данные кандидата:`, {
                         name: update.applicantName,
@@ -225,17 +227,17 @@ const PostedJobDesc = (props:any) => {
                 </Tabs.List>
                 <Tabs.Panel value="overview" className="[&>div]:w-full">{props.jobStatus=="CLOSED"?<Job {...props} edit={true} closed onJobDelete={props.onJobDelete} onJobStatusChange={props.onJobStatusChange} />:<Job {...props} edit={true} onJobDelete={props.onJobDelete} onJobStatusChange={props.onJobStatusChange} />}</Tabs.Panel>
                 <Tabs.Panel value="applicants"><div className="flex mt-10 flex-wrap gap-5 justify-around">
-                    {arr?.length?arr.map((talent:any, index:any) =>  <TalentCard key={index} {...talent} posted={true} onStatusChange={handleStatusChange}/>):"No Applicants Yet"
+                    {arr?.length?arr.map((talent:any, index:any) =>  <TalentCard key={index} {...talent} posted={true} jobTitle={props.jobTitle} company={props.company} onStatusChange={handleStatusChange}/>):"No Applicants Yet"
                     }
                 </div></Tabs.Panel>
                 <Tabs.Panel value="invited"><div className="flex mt-10 flex-wrap gap-5 justify-around">
                     {
-                        arr?.length?arr.map((talent:any, index:any) =>  <TalentCard key={index} {...talent} invited onStatusChange={handleStatusChange}/>):"No Applicants Invited Yet"
+                        arr?.length?arr.map((talent:any, index:any) =>  <TalentCard key={index} {...talent} invited jobTitle={props.jobTitle} company={props.company} onStatusChange={handleStatusChange}/>):"No Applicants Invited Yet"
                     }
                 </div></Tabs.Panel>
                 <Tabs.Panel value="offered"><div className="flex mt-10 flex-wrap gap-5 justify-around">
                     {
-                         arr?.length?arr.map((talent:any, index:any) =>  <TalentCard key={index} {...talent} offered applicationStatus={talent.applicationStatus} onStatusChange={handleStatusChange}/>):"No Applicants Offered Yet"
+                         arr?.length?arr.map((talent:any, index:any) =>  <TalentCard key={index} {...talent} offered applicationStatus={talent.applicationStatus} jobTitle={props.jobTitle} company={props.company} onStatusChange={handleStatusChange}/>):"No Applicants Offered Yet"
                     }
                 </div></Tabs.Panel>
                 <Tabs.Panel value="rejected"><div className="flex mt-10 flex-wrap gap-5 justify-around">
@@ -245,6 +247,8 @@ const PostedJobDesc = (props:any) => {
                                     key={index}
                                     {...talent}
                                     offered
+                                    jobTitle={props.jobTitle}
+                                    company={props.company}
                                     onStatusChange={handleStatusChange}
                                     onDelete={async () => {
                                         try {
