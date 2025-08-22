@@ -29,4 +29,7 @@ mongodb-data/
 
 # Environment variables
 .env
-*.env 
+*.env
+
+# Application properties with secrets
+backend/src/main/resources/application-secrets.properties 
