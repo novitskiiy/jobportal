@@ -25,6 +25,9 @@ public class JobDescriptionAIServiceImpl implements JobDescriptionAIService {
     private final String openAiBaseUrl;
     private final String ollamaBaseUrl;
     private final String ollamaChatModel;
+    private final String huggingFaceApiKey;
+    private final String huggingFaceBaseUrl;
+    private final String huggingFaceModel;
 
     @Override
     public JobDescriptionResponse generateJobDescription(JobDescriptionRequest request) {
@@ -36,6 +39,8 @@ public class JobDescriptionAIServiceImpl implements JobDescriptionAIService {
             
             if (openAiApiKey != null && !openAiApiKey.isEmpty()) {
                 response = callOpenAI(prompt);
+            } else if (huggingFaceApiKey != null && !huggingFaceApiKey.isEmpty()) {
+                response = callHuggingFace(prompt);
             } else {
                 response = callOllama(prompt);
             }
@@ -289,6 +294,31 @@ public class JobDescriptionAIServiceImpl implements JobDescriptionAIService {
                 .retrieve()
                 .bodyToMono(JsonNode.class)
                 .map(response -> response.get("response").asText())
+                .block();
+    }
+
+    private String callHuggingFace(String prompt) {
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("inputs", prompt);
+        requestBody.put("parameters", Map.of(
+            "max_new_tokens", 500,
+            "temperature", 0.7,
+            "do_sample", true
+        ));
+        
+        return webClient.post()
+                .uri(huggingFaceBaseUrl + "/models/" + huggingFaceModel)
+                .header("Authorization", "Bearer " + huggingFaceApiKey)
+                .header("Content-Type", "application/json")
+                .bodyValue(requestBody)
+                .retrieve()
+                .bodyToMono(JsonNode.class)
+                .map(response -> {
+                    if (response.isArray() && response.size() > 0) {
+                        return response.get(0).get("generated_text").asText();
+                    }
+                    return response.asText();
+                })
                 .block();
     }
     

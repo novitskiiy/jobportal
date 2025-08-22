@@ -20,6 +20,15 @@ public class AIConfig {
     @Value("${spring.ai.ollama.chat.model:llama2}")
     private String ollamaChatModel;
 
+    @Value("${spring.ai.huggingface.api-key:}")
+    private String huggingFaceApiKey;
+
+    @Value("${spring.ai.huggingface.base-url:https://api-inference.huggingface.co}")
+    private String huggingFaceBaseUrl;
+
+    @Value("${spring.ai.huggingface.model:gpt2}")
+    private String huggingFaceModel;
+
     @Bean
     public WebClient webClient() {
         return WebClient.builder().build();
@@ -43,5 +52,20 @@ public class AIConfig {
     @Bean
     public String ollamaChatModel() {
         return ollamaChatModel;
+    }
+
+    @Bean
+    public String huggingFaceApiKey() {
+        return huggingFaceApiKey;
+    }
+
+    @Bean
+    public String huggingFaceBaseUrl() {
+        return huggingFaceBaseUrl;
+    }
+
+    @Bean
+    public String huggingFaceModel() {
+        return huggingFaceModel;
     }
 }
