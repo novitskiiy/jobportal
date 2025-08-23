@@ -53,38 +53,29 @@ A full-stack job portal application built with Spring Boot, React, and MongoDB. 
 ## ✨ Features
 
 ### 🎯 Core Functionality
-- **User Authentication & Authorization** - JWT-based secure authentication
-- **Job Posting & Management** - Create, edit, and manage job listings
-- **Job Search & Filtering** - Advanced search with multiple criteria
-- **Application System** - Apply to jobs with resume and cover letter
-- **Real-time Notifications** - WebSocket-based instant notifications
-- **AI-Powered Job Descriptions** - Generate professional job descriptions using AI
+- **User Authentication & Authorization** - JWT-based secure authentication with role-based access
+- **Job Posting & Management** - Create, edit, and manage job listings with AI assistance
+- **Job Search & Filtering** - Advanced search with multiple criteria and filters
+- **Application System** - Apply to jobs with resume and cover letter upload
+- **Real-time Notifications** - WebSocket-based instant status updates and messages
+- **Employer Leaderboard** - Track and display top employers by job count and activity
 
-### 🤖 AI Integration
-- **Spring AI Framework** - Native Spring Boot AI integration
-- **Multi-AI Provider Support** - OpenAI, Hugging Face, Ollama
-- **Smart Job Description Generation** - Context-aware content creation
-- **SEO Optimization** - AI-generated keywords and descriptions
-- **Content Validation** - AI-powered content quality checks
-- **Dynamic Prompt Engineering** - Flexible AI prompt generation
+### 🤖 AI-Powered Features
+- **Spring AI Integration** - Native Spring Boot AI framework with multi-provider support
+- **Smart Job Description Generation** - Context-aware content creation using OpenAI, Hugging Face, or Ollama
+- **AI Job Description Assistant** - Professional description creation with SEO optimization
+- **Content Enhancement** - AI-powered job description optimization and validation
 
-### 💼 Employer Features
-- **Company Profiles** - Detailed company information and branding
-- **Applicant Management** - Track and manage job applications
-- **Interview Scheduling** - Built-in interview coordination
-- **Analytics Dashboard** - Job performance and applicant insights
+### 💼 For Employers
+- **Applicant Management** - Track and manage job applications with status updates
+- **Leaderboard Ranking** - Compete with other employers for top positions
+- **Real-time Analytics** - Monitor application progress and job performance
 
-### 👤 Job Seeker Features
-- **Profile Management** - Professional profiles with skills and experience
-- **Application Tracking** - Monitor application status in real-time
-- **Job Recommendations** - Personalized job suggestions
-- **Resume Builder** - Create and manage professional resumes
-
-### 🔔 Real-time Features
-- **WebSocket Notifications** - Instant status updates and messages
-- **Live Chat** - Real-time communication between employers and candidates
-- **Status Updates** - Real-time application status changes
-- **Interview Reminders** - Automated interview notifications
+### 👤 For Job Seekers
+- **Profile Management** - Professional profiles with skills and experience tracking
+- **Application Tracking** - Real-time monitoring of application status
+- **Resume Management** - Upload and manage resumes for job applications
+- **Employer Insights** - View top employers by job count and activity
 
 ## 🛠 Technology Stack
 
