@@ -129,9 +129,12 @@ const PostJob = () => {
             {/* Hidden AI Helper Component */}
             <BasicAIHelper
                 ref={aiHelperRef}
-                onDescriptionGenerated={(description) => {
+                onDescriptionGenerated={(description, aboutJob) => {
                     form.setFieldValue('description', description);
                     setEditorData(description);
+                    if (aboutJob) {
+                        form.setFieldValue('about', aboutJob);
+                    }
                 }}
                 onAboutGenerated={(about) => {
                     form.setFieldValue('about', about);

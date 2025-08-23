@@ -14,6 +14,18 @@ interface JobDescriptionRequest {
     additionalRequirements?: string;
     tone?: string;
     language?: string;
+    // Новые поля для более гибкой генерации
+    descriptionStyle?: string;
+    targetAudience?: string;
+    industry?: string;
+    companySize?: string;
+    workMode?: string;
+    benefits?: string[];
+    aboutJob?: string;
+    includeCompanyInfo?: boolean;
+    includeBenefits?: boolean;
+    includeGrowthOpportunities?: boolean;
+    customInstructions?: string;
 }
 
 interface JobDescriptionResponse {
@@ -24,6 +36,18 @@ interface JobDescriptionResponse {
     qualityScore: number;
     tone: string;
     language: string;
+    // Новые поля для более детального ответа
+    aboutJob?: string;
+    responsibilities?: string;
+    requirements?: string;
+    benefits?: string;
+    companyInfo?: string;
+    keyHighlights?: string[];
+    callToAction?: string;
+    estimatedReadTime?: string;
+    complexityLevel?: string;
+    alternativeTitles?: string[];
+    summary?: string;
 }
 
 interface OptimizeRequest {

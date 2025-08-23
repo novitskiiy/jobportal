@@ -17,7 +17,10 @@ import {
     Divider,
     Progress,
     ActionIcon,
-    Tooltip
+    Tooltip,
+    Switch,
+    Accordion,
+    Checkbox
 } from '@mantine/core';
 import { 
     IconBrain, 
@@ -29,12 +32,14 @@ import {
     IconSearch,
     IconBulb,
     IconSettings,
-    IconEye
+    IconEye,
+    IconChevronDown,
+    IconChevronUp
 } from '@tabler/icons-react';
 import JobDescriptionAIService from '../../Services/JobDescriptionAIService';
 
 interface AIJobDescriptionGeneratorProps {
-    onDescriptionGenerated?: (description: string) => void;
+    onDescriptionGenerated?: (description: string, aboutJob?: string) => void;
     initialData?: {
         jobTitle?: string;
         skillsRequired?: string[];
@@ -61,6 +66,20 @@ const AIJobDescriptionGenerator: React.FC<AIJobDescriptionGeneratorProps> = ({
     const [tone, setTone] = useState('professional');
     const [language, setLanguage] = useState('ru');
     
+    // Новые поля для более гибкой генерации
+    const [descriptionStyle, setDescriptionStyle] = useState('detailed');
+    const [targetAudience, setTargetAudience] = useState('all');
+    const [industry, setIndustry] = useState('tech');
+    const [companySize, setCompanySize] = useState('medium');
+    const [workMode, setWorkMode] = useState('remote');
+    const [benefits, setBenefits] = useState<string[]>([]);
+    const [aboutJob, setAboutJob] = useState('');
+    const [includeCompanyInfo, setIncludeCompanyInfo] = useState(true);
+    const [includeBenefits, setIncludeBenefits] = useState(true);
+    const [includeGrowthOpportunities, setIncludeGrowthOpportunities] = useState(true);
+    const [customInstructions, setCustomInstructions] = useState('');
+    const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
+    
     const [generatedResponse, setGeneratedResponse] = useState<any>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -86,7 +105,9 @@ const AIJobDescriptionGenerator: React.FC<AIJobDescriptionGeneratorProps> = ({
         { value: 'professional', label: 'Профессиональный' },
         { value: 'friendly', label: 'Дружелюбный' },
         { value: 'casual', label: 'Неформальный' },
-        { value: 'formal', label: 'Формальный' }
+        { value: 'formal', label: 'Формальный' },
+        { value: 'creative', label: 'Креативный' },
+        { value: 'technical', label: 'Технический' }
     ];
 
     const languageOptions = [
@@ -94,13 +115,64 @@ const AIJobDescriptionGenerator: React.FC<AIJobDescriptionGeneratorProps> = ({
         { value: 'en', label: 'English' }
     ];
 
+    const styleOptions = [
+        { value: 'detailed', label: 'Детальный' },
+        { value: 'concise', label: 'Краткий' },
+        { value: 'creative', label: 'Креативный' },
+        { value: 'technical', label: 'Технический' },
+        { value: 'marketing', label: 'Маркетинговый' }
+    ];
+
+    const audienceOptions = [
+        { value: 'junior', label: 'Junior разработчики' },
+        { value: 'mid', label: 'Middle разработчики' },
+        { value: 'senior', label: 'Senior разработчики' },
+        { value: 'all', label: 'Все уровни' }
+    ];
+
+    const industryOptions = [
+        { value: 'tech', label: 'Технологии' },
+        { value: 'finance', label: 'Финансы' },
+        { value: 'healthcare', label: 'Здравоохранение' },
+        { value: 'education', label: 'Образование' },
+        { value: 'retail', label: 'Розничная торговля' },
+        { value: 'manufacturing', label: 'Производство' },
+        { value: 'consulting', label: 'Консалтинг' }
+    ];
+
+    const companySizeOptions = [
+        { value: 'startup', label: 'Стартап' },
+        { value: 'small', label: 'Маленькая (10-50)' },
+        { value: 'medium', label: 'Средняя (50-500)' },
+        { value: 'large', label: 'Большая (500+)' },
+        { value: 'enterprise', label: 'Корпорация' }
+    ];
+
+    const workModeOptions = [
+        { value: 'remote', label: 'Удаленно' },
+        { value: 'hybrid', label: 'Гибрид' },
+        { value: 'onsite', label: 'В офисе' }
+    ];
+
+    const benefitsOptions = [
+        'health insurance',
+        'flexible hours',
+        'remote work',
+        'learning budget',
+        'gym membership',
+        'free lunch',
+        'stock options',
+        'paid time off',
+        'professional development',
+        'team events'
+    ];
+
     const commonSkills = [
         'Java', 'Spring Boot', 'Python', 'JavaScript', 'React', 'Angular', 'Vue.js',
         'Node.js', 'MongoDB', 'PostgreSQL', 'MySQL', 'Redis', 'Kafka', 'Docker',
         'Kubernetes', 'AWS', 'Azure', 'GCP', 'Git', 'CI/CD', 'REST API', 'GraphQL',
-        'Microservices', 'Agile', 'Scrum', 'JIRA', 'Confluence', 'TypeScript',
-        'HTML', 'CSS', 'SASS', 'Bootstrap', 'Tailwind CSS', 'PHP', 'C#', '.NET',
-        'Go', 'Rust', 'Scala', 'Kotlin', 'Swift', 'Flutter', 'React Native'
+        'TypeScript', 'Go', 'Rust', 'C#', '.NET', 'PHP', 'Laravel', 'Ruby', 'Rails',
+        'Scala', 'Kotlin', 'Swift', 'Flutter', 'React Native'
     ];
 
     const generateDescription = async () => {
@@ -129,14 +201,25 @@ const AIJobDescriptionGenerator: React.FC<AIJobDescriptionGeneratorProps> = ({
                 packageOffered,
                 additionalRequirements,
                 tone,
-                language
+                language,
+                descriptionStyle,
+                targetAudience,
+                industry,
+                companySize,
+                workMode,
+                benefits,
+                aboutJob,
+                includeCompanyInfo,
+                includeBenefits,
+                includeGrowthOpportunities,
+                customInstructions
             };
 
             const response = await JobDescriptionAIService.generateJobDescription(request);
             setGeneratedResponse(response);
             
             if (onDescriptionGenerated) {
-                onDescriptionGenerated(response.description);
+                onDescriptionGenerated(response.description, response.aboutJob);
             }
         } catch (err) {
             setError('Не удалось сгенерировать описание. Попробуйте еще раз.');
@@ -221,7 +304,7 @@ const AIJobDescriptionGenerator: React.FC<AIJobDescriptionGeneratorProps> = ({
 
     const useGeneratedDescription = () => {
         if (generatedResponse?.description && onDescriptionGenerated) {
-            onDescriptionGenerated(generatedResponse.description);
+            onDescriptionGenerated(generatedResponse.description, generatedResponse.aboutJob);
         }
     };
 
@@ -314,33 +397,111 @@ const AIJobDescriptionGenerator: React.FC<AIJobDescriptionGeneratorProps> = ({
                                     onChange={(e) => setPackageOffered(e.target.value ? Number(e.target.value) : undefined)}
                                 />
                             </Group>
+
+                            <Textarea
+                                label="Дополнительные требования"
+                                placeholder="Дополнительные требования или пожелания..."
+                                value={additionalRequirements}
+                                onChange={(e) => setAdditionalRequirements(e.target.value)}
+                                minRows={2}
+                            />
                         </Stack>
                     </Tabs.Panel>
 
                     <Tabs.Panel value="advanced" pt="md">
                         <Stack gap="md">
-                            <Textarea
-                                label="Дополнительные требования"
-                                placeholder="Дополнительная информация о требованиях, условиях работы и т.д."
-                                value={additionalRequirements}
-                                onChange={(e) => setAdditionalRequirements(e.target.value)}
-                                minRows={3}
-                            />
+                            <Group grow>
+                                <Select
+                                    label="Стиль описания"
+                                    placeholder="Выберите стиль"
+                                    data={styleOptions}
+                                    value={descriptionStyle}
+                                    onChange={(value) => setDescriptionStyle(value || 'detailed')}
+                                />
+                                <Select
+                                    label="Целевая аудитория"
+                                    placeholder="Выберите аудиторию"
+                                    data={audienceOptions}
+                                    value={targetAudience}
+                                    onChange={(value) => setTargetAudience(value || 'all')}
+                                />
+                            </Group>
 
                             <Group grow>
                                 <Select
+                                    label="Отрасль"
+                                    placeholder="Выберите отрасль"
+                                    data={industryOptions}
+                                    value={industry}
+                                    onChange={(value) => setIndustry(value || 'tech')}
+                                />
+                                <Select
+                                    label="Размер компании"
+                                    placeholder="Выберите размер"
+                                    data={companySizeOptions}
+                                    value={companySize}
+                                    onChange={(value) => setCompanySize(value || 'medium')}
+                                />
+                            </Group>
+
+                            <Group grow>
+                                <Select
+                                    label="Режим работы"
+                                    placeholder="Выберите режим"
+                                    data={workModeOptions}
+                                    value={workMode}
+                                    onChange={(value) => setWorkMode(value || 'remote')}
+                                />
+                                <Select
                                     label="Тон описания"
+                                    placeholder="Выберите тон"
                                     data={toneOptions}
                                     value={tone}
                                     onChange={(value) => setTone(value || 'professional')}
                                 />
-                                <Select
-                                    label="Язык"
-                                    data={languageOptions}
-                                    value={language}
-                                    onChange={(value) => setLanguage(value || 'ru')}
+                            </Group>
+
+                            <MultiSelect
+                                label="Бенефиты"
+                                placeholder="Выберите бенефиты"
+                                data={benefitsOptions}
+                                value={benefits}
+                                onChange={setBenefits}
+                                searchable
+                            />
+
+                            <TextInput
+                                label="Краткое описание (About Job)"
+                                placeholder="Краткое описание для поля 'About Job'..."
+                                value={aboutJob}
+                                onChange={(e) => setAboutJob(e.target.value)}
+                            />
+
+                            <Group>
+                                <Switch
+                                    label="Включить информацию о компании"
+                                    checked={includeCompanyInfo}
+                                    onChange={(e) => setIncludeCompanyInfo(e.currentTarget.checked)}
+                                />
+                                <Switch
+                                    label="Включить бенефиты"
+                                    checked={includeBenefits}
+                                    onChange={(e) => setIncludeBenefits(e.currentTarget.checked)}
+                                />
+                                <Switch
+                                    label="Включить возможности роста"
+                                    checked={includeGrowthOpportunities}
+                                    onChange={(e) => setIncludeGrowthOpportunities(e.currentTarget.checked)}
                                 />
                             </Group>
+
+                            <Textarea
+                                label="Пользовательские инструкции"
+                                placeholder="Дополнительные инструкции для AI..."
+                                value={customInstructions}
+                                onChange={(e) => setCustomInstructions(e.target.value)}
+                                minRows={2}
+                            />
                         </Stack>
                     </Tabs.Panel>
                 </Tabs>
