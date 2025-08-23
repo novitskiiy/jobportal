@@ -40,11 +40,11 @@ public class RedisConfig {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
         
-        // Используем StringRedisSerializer для ключей
+        // Use StringRedisSerializer for keys
         template.setKeySerializer(new StringRedisSerializer());
         template.setHashKeySerializer(new StringRedisSerializer());
         
-        // Используем GenericJackson2JsonRedisSerializer для значений
+        // Use GenericJackson2JsonRedisSerializer for values
         template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
         

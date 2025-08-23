@@ -59,7 +59,7 @@ const formatInterviewTime=(dateString:string)=>{
   
   const date = new Date(dateString);
   
-  // Проверяем, что дата валидна
+  // Check if date is valid
   if (isNaN(date.getTime())) {
     return "Invalid date";
   }
@@ -78,8 +78,8 @@ return date.toLocaleString('en-US', options);
 
 const formatSalary = (salary: number | string) => {
   const numSalary = typeof salary === 'string' ? parseInt(salary) : salary;
-  // Поскольку в форме есть ограничение max={300} и метка "Salary (K)", 
-  // считаем, что все числа уже в тысячах
+  // Since the form has max={300} limit and "Salary (K)" label,
+  // we assume all numbers are already in thousands
   return `$${numSalary}K`;
 }
 

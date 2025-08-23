@@ -12,9 +12,9 @@ const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
 export const LeaderboardService = {
   /**
-   * Получает топ работодателей по количеству вакансий
-   * @param limit количество записей для возврата
-   * @returns Promise с данными leaderboard
+   * Gets top employers by number of job postings
+   * @param limit number of records to return
+   * @returns Promise with leaderboard data
    */
   getTopEmployers: async (limit: number = 10): Promise<EmployerLeaderboard[]> => {
     try {
@@ -27,9 +27,9 @@ export const LeaderboardService = {
   },
 
   /**
-   * Получает позицию работодателя в рейтинге
-   * @param employerId ID работодателя
-   * @returns Promise с позицией в рейтинге
+   * Gets employer's position in the ranking
+   * @param employerId employer ID
+   * @returns Promise with ranking position
    */
   getEmployerRank: async (employerId: string): Promise<number | null> => {
     try {

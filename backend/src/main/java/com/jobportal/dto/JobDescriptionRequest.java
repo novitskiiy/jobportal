@@ -21,16 +21,16 @@ public class JobDescriptionRequest {
     private String tone; // "professional", "casual", "friendly", "formal", "creative", "technical"
     private String language; // "ru", "en"
     
-    // Новые поля для более гибкой генерации
+    // New fields for more flexible generation
     private String descriptionStyle; // "detailed", "concise", "creative", "technical", "marketing"
     private String targetAudience; // "junior", "mid", "senior", "all"
     private String industry; // "tech", "finance", "healthcare", "education", "retail", etc.
     private String companySize; // "startup", "small", "medium", "large", "enterprise"
     private String workMode; // "remote", "hybrid", "onsite"
     private List<String> benefits; // ["health insurance", "flexible hours", "learning budget"]
-    private String aboutJob; // Краткое описание для поля "About Job"
-    private Boolean includeCompanyInfo; // Включать ли информацию о компании
-    private Boolean includeBenefits; // Включать ли раздел с бенефитами
-    private Boolean includeGrowthOpportunities; // Включать ли возможности роста
-    private String customInstructions; // Пользовательские инструкции для AI
+    private String aboutJob; // Brief description for "About Job" field
+    private Boolean includeCompanyInfo; // Whether to include company information
+    private Boolean includeBenefits; // Whether to include benefits section
+    private Boolean includeGrowthOpportunities; // Whether to include growth opportunities
+    private String customInstructions; // Custom instructions for AI
 }

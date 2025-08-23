@@ -1,47 +1,29 @@
-# Environment Setup Guide
+# Environment Variables Setup Guide
 
-## 🔐 Безопасная настройка переменных окружения
+This guide will help you set up environment variables for the JobPortal application.
 
-Этот проект использует переменные окружения для безопасного хранения чувствительных данных, таких как API ключи и пароли.
+## Quick Start
 
-### 📋 Шаги настройки:
+1. **Copy the example file:**
+   ```bash
+   # Linux/Mac
+   cp env.example .env
+   
+   # Windows (PowerShell)
+   Copy-Item env.example .env
+   ```
 
-#### 1. Создание .env файла
+2. **Fill in your API keys and configuration**
+3. **Start the application**
 
-Скопируйте файл `env.example` в `.env`:
+## Required Environment Variables
 
-```bash
-cp env.example .env
-```
-
-#### 2. Настройка переменных окружения
-
-Отредактируйте файл `.env` и заполните следующие переменные:
-
-##### 🔑 AI Service Configuration
-
-**OpenAI (опционально):**
+### Database Configuration
 ```env
-OPENAI_API_KEY=your-openai-api-key-here
-OPENAI_BASE_URL=https://api.openai.com
+MONGODB_URI=mongodb://localhost:27018/jobportal
 ```
 
-**Hugging Face (бесплатный уровень - 30,000 запросов/месяц):**
-```env
-HUGGINGFACE_API_KEY=your-huggingface-api-key-here
-HUGGINGFACE_BASE_URL=https://api-inference.huggingface.co
-HUGGINGFACE_MODEL=microsoft/DialoGPT-medium
-```
-
-**Ollama (локальный - по умолчанию):**
-```env
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_CHAT_MODEL=llama2
-OLLAMA_EMBEDDING_MODEL=llama2
-```
-
-##### 📧 Email Configuration
-
+### Email Configuration
 ```env
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
@@ -49,130 +31,147 @@ EMAIL_USERNAME=your-email@gmail.com
 EMAIL_PASSWORD=your-app-password
 ```
 
-##### 🗄️ Database Configuration
+### AI Services Configuration
 
+#### OpenAI
 ```env
-MONGODB_URI=mongodb://localhost:27018/jobportal
+OPENAI_API_KEY=your-openai-api-key
+OPENAI_BASE_URL=https://api.openai.com/v1
+OPENAI_MODEL=gpt-3.5-turbo
 ```
 
-##### 🔐 JWT Configuration
-
+#### Ollama (Local AI)
 ```env
-JWT_SECRET=your-jwt-secret-key-here
-JWT_EXPIRATION=86400000
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=llama2
 ```
 
-### 🚀 Получение API ключей
-
-#### OpenAI API Key
-1. Зарегистрируйтесь на [OpenAI](https://platform.openai.com/)
-2. Перейдите в раздел API Keys
-3. Создайте новый API ключ
-4. Скопируйте ключ в переменную `OPENAI_API_KEY`
-
-#### Hugging Face API Key
-1. Зарегистрируйтесь на [Hugging Face](https://huggingface.co/)
-2. Перейдите в Settings → Access Tokens
-3. Создайте новый токен
-4. Скопируйте токен в переменную `HUGGINGFACE_API_KEY`
-
-#### Gmail App Password
-1. Включите двухфакторную аутентификацию в Google Account
-2. Перейдите в Security → App passwords
-3. Создайте новый пароль для приложения
-4. Используйте этот пароль в переменной `EMAIL_PASSWORD`
-
-### 🔒 Безопасность
-
-#### ✅ Что включено в .gitignore:
-- `.env` файлы
-- Все файлы с расширением `.env`
-- Локальные конфигурации
-
-#### ⚠️ Важные моменты:
-- **НИКОГДА** не коммитьте `.env` файлы в Git
-- Используйте разные API ключи для разработки и продакшена
-- Регулярно обновляйте API ключи
-- Используйте сильные пароли для JWT_SECRET
-
-### 🐳 Docker Configuration
-
-При использовании Docker, передавайте переменные окружения через:
-
-```bash
-docker run -e OPENAI_API_KEY=your-key -e HUGGINGFACE_API_KEY=your-key ...
+#### Hugging Face
+```env
+HUGGINGFACE_API_KEY=your-huggingface-api-key
+HUGGINGFACE_BASE_URL=https://api-inference.huggingface.co
+HUGGINGFACE_MODEL=meta-llama/Llama-2-7b-chat-hf
 ```
 
-Или создайте `docker-compose.override.yml`:
+### AI Service Selection
+```env
+AI_SERVICE=openai  # openai, ollama, huggingface
+AI_TIMEOUT=30000
+AI_MAX_TOKENS=2000
+AI_TEMPERATURE=0.7
+```
+
+### Security
+```env
+JWT_SECRET=your-super-secret-jwt-key
+```
+
+### Message Broker
+```env
+KAFKA_BOOTSTRAP_SERVERS=localhost:9092
+```
+
+### Cache
+```env
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD=
+```
+
+## How to Get API Keys
+
+### OpenAI API Key
+1. Go to [OpenAI Platform](https://platform.openai.com/)
+2. Sign up or log in
+3. Go to "API Keys" section
+4. Create a new API key
+5. Copy and paste it into your `.env` file
+
+### Hugging Face API Key
+1. Go to [Hugging Face](https://huggingface.co/)
+2. Sign up or log in
+3. Go to "Settings" → "Access Tokens"
+4. Create a new token
+5. Copy and paste it into your `.env` file
+
+### Gmail App Password
+1. Enable 2-factor authentication on your Google account
+2. Go to "Security" → "App passwords"
+3. Generate a new app password for "Mail"
+4. Use this password in `EMAIL_PASSWORD`
+
+## Security Best Practices
+
+1. **Never commit `.env` files to version control**
+2. **Use strong, unique passwords**
+3. **Rotate API keys regularly**
+4. **Use environment-specific configurations**
+5. **Limit API key permissions**
+
+## Docker Configuration
+
+When using Docker Compose, environment variables are automatically passed from your `.env` file to the backend container.
 
 ```yaml
-version: '3.8'
+# docker-compose.yml
 services:
   backend:
     environment:
+      - MONGODB_URI=${MONGODB_URI}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - HUGGINGFACE_API_KEY=${HUGGINGFACE_API_KEY}
-      - EMAIL_USERNAME=${EMAIL_USERNAME}
-      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      # ... other variables
 ```
 
-### 🔧 Проверка конфигурации
+## Troubleshooting
 
-После настройки переменных окружения:
+### Common Issues
 
-1. Перезапустите приложение
-2. Проверьте логи на наличие ошибок конфигурации
-3. Протестируйте AI функциональность
+1. **"API key not found" error**
+   - Check that your API key is correctly set in `.env`
+   - Verify the key has the necessary permissions
 
-### 📝 Пример полного .env файла
+2. **"Connection refused" for local services**
+   - Ensure MongoDB, Redis, and Kafka are running
+   - Check port configurations
 
+3. **Email sending fails**
+   - Verify Gmail app password is correct
+   - Check if 2FA is enabled on your Google account
+
+### Testing Configuration
+
+You can test your configuration by running:
+```bash
+cd backend
+mvn spring-boot:run
+```
+
+Check the console output for any configuration errors.
+
+## Environment-Specific Configurations
+
+### Development
 ```env
-# Database Configuration
-MONGODB_URI=mongodb://localhost:27018/jobportal
-
-# Email Configuration
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USERNAME=your-email@gmail.com
-EMAIL_PASSWORD=your-app-password
-
-# AI Service Configuration
-OPENAI_API_KEY=sk-your-openai-key-here
-OPENAI_BASE_URL=https://api.openai.com
-
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_CHAT_MODEL=llama2
-OLLAMA_EMBEDDING_MODEL=llama2
-
-HUGGINGFACE_API_KEY=hf-your-huggingface-key-here
-HUGGINGFACE_BASE_URL=https://api-inference.huggingface.co
-HUGGINGFACE_MODEL=microsoft/DialoGPT-medium
-
-# AI Service Settings
-AI_JOB_DESCRIPTION_ENABLED=true
-AI_JOB_DESCRIPTION_MAX_LENGTH=2000
-
-# JWT Configuration
-JWT_SECRET=your-super-secret-jwt-key-here
-JWT_EXPIRATION=86400000
-
-# Application Settings
 SPRING_PROFILES_ACTIVE=dev
+LOG_LEVEL=DEBUG
 ```
 
-### 🆘 Troubleshooting
+### Production
+```env
+SPRING_PROFILES_ACTIVE=prod
+LOG_LEVEL=WARN
+```
 
-#### Проблема: "API key not found"
-- Проверьте, что переменная окружения установлена правильно
-- Убедитесь, что файл `.env` находится в корне проекта
-- Перезапустите приложение
+### Testing
+```env
+SPRING_PROFILES_ACTIVE=test
+AI_SERVICE=mock
+```
 
-#### Проблема: "Email authentication failed"
-- Проверьте правильность EMAIL_USERNAME и EMAIL_PASSWORD
-- Убедитесь, что используется App Password, а не обычный пароль
-- Проверьте настройки двухфакторной аутентификации
+## Support
 
-#### Проблема: "Database connection failed"
-- Проверьте, что MongoDB запущен
-- Убедитесь в правильности MONGODB_URI
-- Проверьте доступность порта 27018
+If you encounter issues with environment setup:
+1. Check the application logs
+2. Verify all required variables are set
+3. Test individual services (MongoDB, Redis, etc.)
+4. Consult the troubleshooting section above

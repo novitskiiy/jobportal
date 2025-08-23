@@ -18,16 +18,16 @@ public class JobDescriptionResponse {
     private String tone;
     private String language;
     
-    // Новые поля для более детального ответа
-    private String aboutJob; // Краткое описание для поля "About Job"
-    private String responsibilities; // Отдельный раздел с обязанностями
-    private String requirements; // Отдельный раздел с требованиями
-    private String benefits; // Отдельный раздел с бенефитами
-    private String companyInfo; // Информация о компании
-    private List<String> keyHighlights; // Ключевые моменты вакансии
-    private String callToAction; // Призыв к действию
-    private String estimatedReadTime; // Примерное время чтения
-    private String complexityLevel; // Уровень сложности описания
-    private List<String> alternativeTitles; // Альтернативные названия должности
-    private String summary; // Краткое резюме вакансии
+    // New fields for more detailed response
+    private String aboutJob; // Brief description for "About Job" field
+    private String responsibilities; // Separate section with responsibilities
+    private String requirements; // Separate section with requirements
+    private String benefits; // Separate section with benefits
+    private String companyInfo; // Company information
+    private List<String> keyHighlights; // Key highlights of the job
+    private String callToAction; // Call to action
+    private String estimatedReadTime; // Estimated reading time
+    private String complexityLevel; // Description complexity level
+    private List<String> alternativeTitles; // Alternative job titles
+    private String summary; // Brief job summary
 }

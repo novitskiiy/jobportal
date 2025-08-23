@@ -6,32 +6,32 @@ import com.jobportal.dto.JobDescriptionResponse;
 public interface JobDescriptionAIService {
     
     /**
-     * Генерирует описание вакансии на основе предоставленных данных
-     * @param request данные для генерации описания
-     * @return сгенерированное описание с дополнительной информацией
+     * Generates job description based on provided data
+     * @param request data for description generation
+     * @return generated description with additional information
      */
     JobDescriptionResponse generateJobDescription(JobDescriptionRequest request);
     
     /**
-     * Оптимизирует существующее описание вакансии для лучшего поиска
-     * @param description исходное описание
-     * @return оптимизированное описание
+     * Optimizes existing job description for better search
+     * @param description original description
+     * @return optimized description
      */
     String optimizeDescription(String description);
     
     /**
-     * Проверяет описание на соответствие стандартам и дает рекомендации
-     * @param description описание для проверки
-     * @return рекомендации по улучшению
+     * Validates description against standards and provides recommendations
+     * @param description description to validate
+     * @return improvement recommendations
      */
     String validateDescription(String description);
     
     /**
-     * Генерирует SEO-ключевые слова для вакансии
-     * @param jobTitle название должности
-     * @param skills навыки
-     * @param location местоположение
-     * @return список ключевых слов
+     * Generates SEO keywords for job posting
+     * @param jobTitle job title
+     * @param skills skills
+     * @param location location
+     * @return list of keywords
      */
     String generateSEOKeywords(String jobTitle, String skills, String location);
 }

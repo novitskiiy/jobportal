@@ -10,7 +10,7 @@ export const useNotifications = () => {
     const [notificationList, setNotificationList] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
 
-    // Загрузка существующих уведомлений
+    // Load existing notifications
     const loadNotifications = useCallback(async () => {
         if (!user?.id) return;
         
@@ -25,18 +25,18 @@ export const useNotifications = () => {
         }
     }, [user?.id]);
 
-    // Обработка нового уведомления
+    // Handle new notification
     const handleNewNotification = useCallback((newNotification: any) => {
         setNotificationList(prev => [newNotification, ...prev]);
         
-        // Не показываем toast уведомление для дублирующихся уведомлений
+        // Don't show toast notification for duplicate notifications
         if (newNotification.action === "Interview Scheduled" || 
             newNotification.action === "Application Accepted" || 
             newNotification.action === "Application Rejected") {
             return;
         }
         
-        // Показываем toast уведомление
+        // Show toast notification
         notifications.show({
             id: `notification-${newNotification.id}`,
             title: newNotification.action,
@@ -48,7 +48,7 @@ export const useNotifications = () => {
         });
     }, []);
 
-    // Отметить уведомление как прочитанное
+    // Mark notification as read
     const markAsRead = useCallback(async (notificationId: number, index: number) => {
         try {
             await readNotification(notificationId);
@@ -58,21 +58,21 @@ export const useNotifications = () => {
         }
     }, []);
 
-    // Подключение к WebSocket
+    // Connect to WebSocket
     useEffect(() => {
         if (!user?.id) return;
 
         loadNotifications();
         
-        // Подключаемся к WebSocket с задержкой, чтобы убедиться, что пользователь загружен
+        // Connect to WebSocket with delay to ensure user is loaded
         const timer = setTimeout(() => {
-            console.log(`useNotifications: Подключаемся к WebSocket для пользователя ${user.id}`);
+            console.log(`useNotifications: Connecting to WebSocket for user ${user.id}`);
             WebSocketManager.connect(user.id.toString(), handleNewNotification);
         }, 1000);
 
         return () => {
             clearTimeout(timer);
-            // Не отключаем WebSocket здесь, так как он может использоваться другими компонентами
+            // Don't disconnect WebSocket here as it may be used by other components
         };
     }, [user?.id, loadNotifications, handleNewNotification]);
 

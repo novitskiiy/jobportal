@@ -7,21 +7,21 @@ export const useJobStatus = (jobId?: number, applicantId?: number) => {
     const [jobStatus, setJobStatus] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false);
 
-    // Обработчик обновления статуса
+    // Status update handler
     const handleStatusUpdate = useCallback((update: StatusUpdate) => {
-        // Проверяем, относится ли обновление к текущей заявке
+        // Check if the update relates to the current application
         if (jobId && update.jobId === jobId) {
             if (applicantId && update.applicantId === applicantId) {
-                // Обновление для конкретного соискателя
+                // Update for specific applicant
                 setJobStatus(update.newStatus);
             } else if (!applicantId) {
-                // Обновление для работодателя (все соискатели)
+                // Update for employer (all applicants)
                 setJobStatus(update.newStatus);
             }
         }
     }, [jobId, applicantId]);
 
-    // Регистрируем обработчик обновлений статусов
+    // Register status update handler
     useEffect(() => {
         StatusUpdateService.onStatusUpdate(handleStatusUpdate);
 
@@ -30,7 +30,7 @@ export const useJobStatus = (jobId?: number, applicantId?: number) => {
         };
     }, [handleStatusUpdate]);
 
-    // Обновляем статус заявки
+    // Update application status
     const updateJobStatus = useCallback((newStatus: string) => {
         setJobStatus(newStatus);
     }, []);

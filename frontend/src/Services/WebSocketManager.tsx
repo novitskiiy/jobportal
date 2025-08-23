@@ -5,22 +5,22 @@ class WebSocketManager {
     private notificationCallback: ((notification: any) => void) | null = null;
 
     connect(userId: string, onNotificationReceived: (notification: any) => void) {
-        console.log(`WebSocketManager: Попытка подключения для пользователя ${userId}`);
+        console.log(`WebSocketManager: Attempting connection for user ${userId}`);
         
         if (this.currentUserId === userId && WebSocketService.isConnectedStatus()) {
-            console.log(`WebSocketManager: Уже подключены к пользователю ${userId}`);
-            return; // Уже подключены к этому пользователю
+            console.log(`WebSocketManager: Already connected to user ${userId}`);
+            return; // Already connected to this user
         }
 
-        // Отключаем предыдущее подключение
+        // Disconnect previous connection
         this.disconnect();
 
         this.currentUserId = userId;
         this.notificationCallback = onNotificationReceived;
 
-        console.log(`WebSocketManager: Подключаемся к WebSocket для пользователя ${userId}`);
+        console.log(`WebSocketManager: Connecting to WebSocket for user ${userId}`);
         WebSocketService.connect(userId, (notification) => {
-            console.log(`WebSocketManager: Получено уведомление:`, notification);
+            console.log(`WebSocketManager: Received notification:`, notification);
             if (this.notificationCallback) {
                 this.notificationCallback(notification);
             }

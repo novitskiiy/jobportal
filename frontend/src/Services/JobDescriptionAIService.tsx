@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
-// Интерфейсы для типизации
+// Interfaces for typing
 interface JobDescriptionRequest {
     jobTitle: string;
     skillsRequired: string[];

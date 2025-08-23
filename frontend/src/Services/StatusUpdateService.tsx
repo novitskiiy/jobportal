@@ -32,12 +32,12 @@ class StatusUpdateService {
         this.statusUpdateCallbacks = this.statusUpdateCallbacks.filter(cb => cb !== callback);
     }
 
-    // Обрабатываем обновление статуса
+    // Handle status update
     handleStatusUpdate(update: StatusUpdate) {
-        console.log('StatusUpdateService: Обрабатываем обновление статуса:', update);
-        console.log('StatusUpdateService: Количество зарегистрированных callbacks:', this.statusUpdateCallbacks.length);
+        console.log('StatusUpdateService: Processing status update:', update);
+        console.log('StatusUpdateService: Number of registered callbacks:', this.statusUpdateCallbacks.length);
         
-        // Уведомляем все зарегистрированные callbacks
+        // Notify all registered callbacks
         this.statusUpdateCallbacks.forEach(callback => {
             try {
                 callback(update);
@@ -46,14 +46,14 @@ class StatusUpdateService {
             }
         });
 
-        // Показываем toast уведомление только для заявок, не для изменения статуса вакансии
-        // И только для кандидатов, не для работодателей
+        // Show toast notification only for applications, not for job status changes
+        // And only for candidates, not for employers
         if (update.type !== "JOB_STATUS" && update.targetUserId === update.applicantId) {
             this.showStatusUpdateNotification(update);
         }
     }
 
-    // Показываем toast уведомление об изменении статуса
+    // Show toast notification about status change
     private showStatusUpdateNotification(update: StatusUpdate) {
         const getStatusIcon = (status: string) => {
             switch (status) {

@@ -13,22 +13,22 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        System.out.println("WebSocketConfig: Регистрируем STOMP endpoints");
+        System.out.println("WebSocketConfig: Registering STOMP endpoints");
         registry.addEndpoint("/ws")
                 .setAllowedOriginPatterns("*")
                 .withSockJS()
                 .setHeartbeatTime(25000)
                 .setDisconnectDelay(5000);
-        System.out.println("WebSocketConfig: STOMP endpoints зарегистрированы");
+        System.out.println("WebSocketConfig: STOMP endpoints registered");
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        System.out.println("WebSocketConfig: Настраиваем message broker");
+        System.out.println("WebSocketConfig: Configuring message broker");
         registry.setApplicationDestinationPrefixes("/app");
         registry.enableSimpleBroker("/topic", "/user");
         registry.setUserDestinationPrefix("/user");
-        System.out.println("WebSocketConfig: Message broker настроен");
+        System.out.println("WebSocketConfig: Message broker configured");
     }
 
     @Override

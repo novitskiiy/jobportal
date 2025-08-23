@@ -28,11 +28,11 @@ class WebSocketService {
         });
 
         this.client.onConnect = () => {
-            console.log('WebSocketService: WebSocket подключен');
+            console.log('WebSocketService: WebSocket connected');
             this.isConnected = true;
             this.reconnectAttempts = 0;
             
-            // Подписываемся на персональные уведомления пользователя
+            // Subscribe to user's personal notifications
             this.client?.subscribe(`/user/${userId}/queue/notifications`, (message) => {
                 try {
                     const notification = JSON.parse(message.body);
@@ -42,14 +42,14 @@ class WebSocketService {
                 }
             });
 
-            // Подписываемся на обновления статусов
-            console.log(`WebSocketService: Подписываемся на обновления статусов для пользователя ${userId}`);
+            // Subscribe to status updates
+            console.log(`WebSocketService: Subscribing to status updates for user ${userId}`);
             this.client?.subscribe(`/user/${userId}/queue/status-updates`, (message) => {
                 try {
                     const statusUpdate: StatusUpdate = JSON.parse(message.body);
-                    console.log('WebSocketService: Получено обновление статуса:', statusUpdate);
+                    console.log('WebSocketService: Received status update:', statusUpdate);
                     if (statusUpdate.type === "NEW_APPLICATION") {
-                        console.log('WebSocketService: Данные нового кандидата:', {
+                        console.log('WebSocketService: New candidate data:', {
                             name: statusUpdate.applicantName,
                             email: statusUpdate.applicantEmail,
                             phone: statusUpdate.applicantPhone,
