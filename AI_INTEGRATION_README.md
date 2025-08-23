@@ -17,7 +17,12 @@
 - **Setup**: Requires local installation
 - **Best for**: Development, local testing
 
-## 🚀 Quick Setup for Hosting (Hugging Face)
+## 🔒 Security First!
+
+### ⚠️ IMPORTANT: Never commit API keys to Git!
+- API keys in the repository have been removed for security
+- Use environment variables or secure configuration management
+- The repository now contains only placeholder values
 
 ### Step 1: Get Hugging Face API Key
 1. Go to [Hugging Face](https://huggingface.co/settings/tokens)
@@ -25,13 +30,28 @@
 3. Generate new API token
 4. Copy the token
 
-### Step 2: Configure Backend
+### Step 2: Configure Backend (Choose one method)
+
+**Method A: Environment Variables (Recommended)**
+```bash
+# Set environment variable
+export HUGGINGFACE_API_KEY=your-actual-api-key-here
+```
+
+**Method B: application.properties (Development only)**
 Add to `backend/src/main/resources/application.properties`:
 ```properties
 # Hugging Face Configuration
-spring.ai.huggingface.api-key=your-huggingface-api-key-here
+spring.ai.huggingface.api-key=${HUGGINGFACE_API_KEY:your-huggingface-api-key-here}
 spring.ai.huggingface.base-url=https://api-inference.huggingface.co
 spring.ai.huggingface.model=microsoft/DialoGPT-medium
+```
+
+**Method C: Docker Environment**
+```yaml
+# In docker-compose.yml
+environment:
+  - HUGGINGFACE_API_KEY=your-actual-api-key-here
 ```
 
 ### Step 3: Deploy
