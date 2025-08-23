@@ -1,12 +1,41 @@
 # 🚀 JobPortal - Modern Job Board Platform
 
-A full-stack job portal application built with Spring Boot, React, and MongoDB. Features AI-powered job description generation, real-time notifications, and a modern user interface.
+A full-stack job portal application built with Spring Boot, React, and MongoDB. Features AI-powered job description generation, real-time notifications, and a modern user interface. Leverages Docker for containerization, Redis for caching, Kafka for message streaming, and Spring Security for robust authentication and authorization.
 
-![JobPortal](https://img.shields.io/badge/JobPortal-v1.0-blue)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.2-green)
-![React](https://img.shields.io/badge/React-18.3.1-blue)
-![MongoDB](https://img.shields.io/badge/MongoDB-8.0+-green)
-![Docker](https://img.shields.io/badge/Docker-Compose-blue)
+## 🛠 Built With
+
+### Backend Technologies
+![Java](https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=java&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.2-green?style=for-the-badge&logo=spring-boot&logoColor=white)
+![Spring AI](https://img.shields.io/badge/Spring_AI-1.0.0-green?style=for-the-badge&logo=spring&logoColor=white)
+![Spring Security](https://img.shields.io/badge/Spring_Security-6.0-green?style=for-the-badge&logo=spring-security&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-8.0+-green?style=for-the-badge&logo=mongodb&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-7.0-red?style=for-the-badge&logo=redis&logoColor=white)
+![Apache Kafka](https://img.shields.io/badge/Apache_Kafka-3.0-black?style=for-the-badge&logo=apache-kafka&logoColor=white)
+
+### Frontend Technologies
+![React](https://img.shields.io/badge/React-18.3.1-blue?style=for-the-badge&logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript&logoColor=white)
+![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-1.9-purple?style=for-the-badge&logo=redux&logoColor=white)
+![Mantine UI](https://img.shields.io/badge/Mantine_UI-7.0-blue?style=for-the-badge&logo=mantine&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.0-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+
+### Infrastructure & Tools
+![Docker](https://img.shields.io/badge/Docker-24.0-blue?style=for-the-badge&logo=docker&logoColor=white)
+![Docker Compose](https://img.shields.io/badge/Docker_Compose-2.0-blue?style=for-the-badge&logo=docker&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-1.24-green?style=for-the-badge&logo=nginx&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-3.8+-orange?style=for-the-badge&logo=apache-maven&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-18.0-green?style=for-the-badge&logo=node.js&logoColor=white)
+
+### AI Services
+![OpenAI](https://img.shields.io/badge/OpenAI-GPT_3.5-412991?style=for-the-badge&logo=openai&logoColor=white)
+![Hugging Face](https://img.shields.io/badge/Hugging_Face-Transformers-yellow?style=for-the-badge&logo=huggingface&logoColor=black)
+![Ollama](https://img.shields.io/badge/Ollama-Local_AI-FF6B6B?style=for-the-badge&logo=ollama&logoColor=white)
+
+### Development Tools
+![Git](https://img.shields.io/badge/Git-2.30+-orange?style=for-the-badge&logo=git&logoColor=white)
+![VS Code](https://img.shields.io/badge/VS_Code-1.80-blue?style=for-the-badge&logo=visual-studio-code&logoColor=white)
+![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-2023.1-black?style=for-the-badge&logo=intellij-idea&logoColor=white)
 
 ## 📋 Table of Contents
 
