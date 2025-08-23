@@ -16,11 +16,10 @@ A full-stack job portal application built with Spring Boot, React, and MongoDB. 
 - [Prerequisites](#-prerequisites)
 - [Quick Start](#-quick-start)
 - [Environment Setup](#-environment-setup)
-- [Development](#-development)
+
 - [API Documentation](#-api-documentation)
 - [Project Structure](#-project-structure)
-- [Deployment](#-deployment)
-- [Contributing](#-contributing)
+
 
 ## ✨ Features
 
@@ -33,10 +32,12 @@ A full-stack job portal application built with Spring Boot, React, and MongoDB. 
 - **AI-Powered Job Descriptions** - Generate professional job descriptions using AI
 
 ### 🤖 AI Integration
+- **Spring AI Framework** - Native Spring Boot AI integration
 - **Multi-AI Provider Support** - OpenAI, Hugging Face, Ollama
 - **Smart Job Description Generation** - Context-aware content creation
 - **SEO Optimization** - AI-generated keywords and descriptions
 - **Content Validation** - AI-powered content quality checks
+- **Dynamic Prompt Engineering** - Flexible AI prompt generation
 
 ### 💼 Employer Features
 - **Company Profiles** - Detailed company information and branding
@@ -61,6 +62,7 @@ A full-stack job portal application built with Spring Boot, React, and MongoDB. 
 ### Backend
 - **Java 17** - Modern Java with latest features
 - **Spring Boot 3.3.2** - Rapid application development framework
+- **Spring AI** - AI integration framework for Spring applications
 - **Spring Security** - Authentication and authorization
 - **Spring Data MongoDB** - NoSQL database integration
 - **Spring WebSocket** - Real-time communication
@@ -90,6 +92,7 @@ A full-stack job portal application built with Spring Boot, React, and MongoDB. 
 - **Nginx** - Web server and reverse proxy
 
 ### AI Services
+- **Spring AI** - Native Spring Boot AI integration framework
 - **OpenAI GPT** - Advanced language model
 - **Hugging Face** - Open-source AI models
 - **Ollama** - Local AI inference
@@ -115,10 +118,11 @@ A full-stack job portal application built with Spring Boot, React, and MongoDB. 
                         │   Kafka Queue   │
                         └─────────────────┘
                                 │
-                        ┌─────────────────┐
-                        │   AI Services   │
-                        │ (OpenAI/HF/etc) │
-                        └─────────────────┘
+                                                 ┌─────────────────┐
+                         │   AI Services   │
+                         │ (Spring AI +    │
+                         │  OpenAI/HF/etc) │
+                         └─────────────────┘
 ```
 
 ## 📋 Prerequisites
@@ -224,54 +228,6 @@ chmod +x setup-env.sh
 
 For detailed setup instructions, see [ENVIRONMENT_SETUP.md](ENVIRONMENT_SETUP.md).
 
-## 💻 Development
-
-### Backend Development
-
-```bash
-cd backend
-
-# Run with Maven
-mvn spring-boot:run
-
-# Run tests
-mvn test
-
-# Build JAR
-mvn clean package
-```
-
-### Frontend Development
-
-```bash
-cd frontend
-
-# Install dependencies
-npm install
-
-# Start development server
-npm start
-
-# Build for production
-npm run build
-
-# Run tests
-npm test
-```
-
-### Database Management
-
-```bash
-# Access MongoDB shell
-docker exec -it mongodb mongosh
-
-# View logs
-docker logs mongodb
-
-# Backup database
-docker exec mongodb mongodump --out /data/backup
-```
-
 ## 📚 API Documentation
 
 ### Authentication Endpoints
@@ -293,9 +249,10 @@ docker exec mongodb mongodump --out /data/backup
 - `PUT /api/applications/{id}/status` - Update application status
 
 ### AI Services
-- `POST /api/ai/generate-description` - Generate job description
+- `POST /api/ai/generate-description` - Generate job description using Spring AI
 - `POST /api/ai/optimize` - Optimize existing description
 - `POST /api/ai/validate` - Validate content
+- `POST /api/ai/seo-keywords` - Generate SEO keywords
 
 ### Real-time Endpoints
 - `GET /ws` - WebSocket connection
@@ -340,101 +297,4 @@ jobportal/
 ├── 📄 setup-env.sh                      # Linux/Mac setup script
 ├── 📄 setup-env.ps1                     # Windows setup script
 └── 📄 README.md                         # This file
-```
-
-## 🚀 Deployment
-
-### Production Deployment
-
-1. **Environment Configuration**
-   ```bash
-   # Set production environment
-   export SPRING_PROFILES_ACTIVE=prod
-   export NODE_ENV=production
-   ```
-
-2. **Build and Deploy**
-   ```bash
-   # Build all services
-   docker compose -f docker-compose.prod.yml build
-
-   # Deploy to production
-   docker compose -f docker-compose.prod.yml up -d
-   ```
-
-3. **SSL Configuration**
-   ```bash
-   # Add SSL certificates
-   cp ssl/cert.pem /etc/ssl/certs/
-   cp ssl/key.pem /etc/ssl/private/
-   ```
-
-### Monitoring and Logs
-
-```bash
-# View all logs
-docker compose logs -f
-
-# View specific service logs
-docker compose logs -f backend
-docker compose logs -f frontend
-
-# Monitor resource usage
-docker stats
-```
-
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. **Fork the repository**
-2. **Create a feature branch**
-   ```bash
-   git checkout -b feature/amazing-feature
-   ```
-3. **Make your changes**
-4. **Run tests**
-   ```bash
-   # Backend tests
-   cd backend && mvn test
-   
-   # Frontend tests
-   cd frontend && npm test
-   ```
-5. **Commit your changes**
-   ```bash
-   git commit -m "feat: add amazing feature"
-   ```
-6. **Push to the branch**
-   ```bash
-   git push origin feature/amazing-feature
-   ```
-7. **Create a Pull Request**
-
-### Code Style Guidelines
-
-- **Backend**: Follow Spring Boot conventions
-- **Frontend**: Use TypeScript, follow React best practices
-- **Commits**: Use conventional commit messages
-- **Documentation**: Update README and API docs
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-- **Documentation**: [ENVIRONMENT_SETUP.md](ENVIRONMENT_SETUP.md)
-- **Issues**: [GitHub Issues](https://github.com/your-repo/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-repo/discussions)
-
-## 🙏 Acknowledgments
-
-- Spring Boot team for the excellent framework
-- React team for the amazing UI library
-- Mantine team for the beautiful components
-- OpenAI, Hugging Face, and Ollama for AI services
-
----
-
-**Made with ❤️ by the JobPortal Team** 
+``` 
