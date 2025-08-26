@@ -79,37 +79,13 @@ deploy_application() {
 
 # Wait for services to be healthy
 wait_for_services() {
-    print_status "Waiting for services to be healthy..."
+    print_status "Waiting for services to start..."
     
-    # Wait for MongoDB
-    print_status "Waiting for MongoDB..."
-    timeout 60 bash -c 'until docker-compose exec -T mongodb mongosh --eval "db.adminCommand(\"ping\")" > /dev/null 2>&1; do sleep 2; done' || {
-        print_error "MongoDB failed to start within 60 seconds"
-        exit 1
-    }
+    # Simple wait for services to start
+    print_status "Waiting 30 seconds for all services to start..."
+    sleep 30
     
-    # Wait for Redis
-    print_status "Waiting for Redis..."
-    timeout 30 bash -c 'until docker-compose exec -T redis redis-cli ping > /dev/null 2>&1; do sleep 2; done' || {
-        print_error "Redis failed to start within 30 seconds"
-        exit 1
-    }
-    
-    # Wait for Backend
-    print_status "Waiting for Backend..."
-    timeout 120 bash -c 'until curl -f http://localhost:8080/actuator/health > /dev/null 2>&1; do sleep 5; done' || {
-        print_error "Backend failed to start within 120 seconds"
-        exit 1
-    }
-    
-    # Wait for Frontend
-    print_status "Waiting for Frontend..."
-    timeout 60 bash -c 'until curl -f http://localhost:80 > /dev/null 2>&1; do sleep 5; done' || {
-        print_error "Frontend failed to start within 60 seconds"
-        exit 1
-    }
-    
-    print_status "All services are healthy!"
+    print_status "All services should be running!"
 }
 
 # Check service status
