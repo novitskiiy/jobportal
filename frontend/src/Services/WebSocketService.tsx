@@ -14,7 +14,7 @@ class WebSocketService {
         }
 
         this.client = new Client({
-            webSocketFactory: () => new SockJS('http://localhost:8080/ws', null, {
+            webSocketFactory: () => new SockJS(`${process.env.REACT_APP_WS_URL || 'http://localhost:8080'}/ws`, null, {
                 timeout: 5000,
                 transports: ['websocket', 'xhr-streaming', 'xhr-polling']
             }),

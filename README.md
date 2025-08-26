@@ -45,10 +45,9 @@ A full-stack job portal application built with Spring Boot, React, and MongoDB. 
 - [Prerequisites](#-prerequisites)
 - [Quick Start](#-quick-start)
 - [Environment Setup](#-environment-setup)
-
+- [Deployment](#-deployment)
 - [API Documentation](#-api-documentation)
 - [Project Structure](#-project-structure)
-
 
 ## ✨ Features
 
@@ -247,6 +246,79 @@ chmod +x setup-env.sh
 ```
 
 For detailed setup instructions, see [ENVIRONMENT_SETUP.md](ENVIRONMENT_SETUP.md).
+
+## 🚀 Deployment
+
+### Production Deployment
+
+The application is ready for production deployment with Docker. We provide multiple deployment options:
+
+#### Quick Deployment
+```bash
+# Clone the repository
+git clone <repository-url>
+cd jobportal
+
+# Copy production environment template
+cp env.production.example .env
+
+# Edit .env file with your production values
+nano .env
+
+# Deploy using the automated script
+chmod +x deploy.sh
+./deploy.sh prod
+```
+
+#### Manual Deployment
+```bash
+# For production environment
+docker-compose -f docker-compose.prod.yml up -d --build
+
+# For development environment
+docker-compose up -d --build
+```
+
+### Deployment Files
+
+- `docker-compose.yml` - Development environment
+- `docker-compose.prod.yml` - Production environment with enhanced security
+- `deploy.sh` - Automated deployment script
+- `env.production.example` - Production environment template
+- `DEPLOYMENT.md` - Detailed deployment guide
+
+### Production Features
+
+✅ **Health Checks** - All services include health monitoring  
+✅ **Restart Policies** - Automatic service recovery  
+✅ **Security Headers** - Enhanced security configuration  
+✅ **Environment Variables** - Flexible configuration management  
+✅ **Monitoring Ready** - Prometheus and Grafana integration  
+✅ **SSL Ready** - HTTPS configuration support  
+✅ **Load Balancing** - Nginx reverse proxy configuration  
+
+### Monitoring & Observability
+
+```bash
+# Start monitoring stack
+docker-compose -f monitoring.yml up -d
+
+# Access monitoring tools
+# Prometheus: http://localhost:9090
+# Grafana: http://localhost:3000 (admin/admin)
+# cAdvisor: http://localhost:8081
+```
+
+### Security Considerations
+
+- Use strong JWT secrets
+- Configure HTTPS/SSL certificates
+- Set up firewall rules
+- Regular security updates
+- Database authentication
+- Redis password protection
+
+For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
 
 ## 📚 API Documentation
 

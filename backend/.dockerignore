@@ -20,22 +20,13 @@ Thumbs.db
 # Logs
 *.log
 logs/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Dependencies
-node_modules/
 
 # Build outputs
-build/
-dist/
+target/
+!target/*.jar
 
 # Test files
-coverage/
-.nyc_output/
-*.test.js
-*.spec.js
+src/test/
 
 # Docker files
 Dockerfile*
@@ -46,4 +37,4 @@ Dockerfile*
 
 # Temporary files
 tmp/
-temp/ 
+temp/

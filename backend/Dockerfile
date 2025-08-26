@@ -12,6 +12,9 @@ RUN sed -i 's/\r$//' mvnw && \
 RUN ./mvnw install -DskipTests
 
 FROM eclipse-temurin:17-jre-alpine
+# Install curl for health checks
+RUN apk add --no-cache curl
+
 VOLUME /tmp
 COPY --from=build /workspace/app/target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
