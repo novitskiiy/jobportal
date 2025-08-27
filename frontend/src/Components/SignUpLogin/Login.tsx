@@ -1,5 +1,5 @@
-import { Anchor, Button, Checkbox, LoadingOverlay, PasswordInput, TextInput } from "@mantine/core";
-import { IconAt, IconCheck, IconLock, IconX } from "@tabler/icons-react";
+import { Anchor, Button, Checkbox, LoadingOverlay, PasswordInput, TextInput, Paper, Table, Badge } from "@mantine/core";
+import { IconAt, IconCheck, IconLock, IconX, IconUser, IconBuilding } from "@tabler/icons-react";
 import { useState } from "react";
 import {  useNavigate } from "react-router-dom";
 import { loginValidation } from "../../Services/FormValidation";
@@ -58,6 +58,41 @@ const Login = () => {
     overlayProps={{ radius: 'sm', blur: 2 }}
     loaderProps={{ color: 'brightSun.4', type: 'bars' }}
   /><div data-aos="zoom-out" className="w-1/2 sm-mx:w-full px-20  bs-mx:px-10 md-mx:px-5  flex flex-col gap-3 justify-center">
+        
+        {/* Test Accounts Table */}
+        <Paper shadow="xs" p="md" mb="md" withBorder>
+            <div className="text-lg font-semibold mb-3 text-center">Test Accounts</div>
+            <Table striped highlightOnHover>
+                <Table.Thead>
+                    <Table.Tr>
+                        <Table.Th>Role</Table.Th>
+                        <Table.Th>Login</Table.Th>
+                        <Table.Th>Password</Table.Th>
+                    </Table.Tr>
+                </Table.Thead>
+                <Table.Tbody>
+                    <Table.Tr>
+                        <Table.Td>
+                            <Badge leftSection={<IconUser size={12} />} color="blue" variant="light">
+                                Applicant
+                            </Badge>
+                        </Table.Td>
+                        <Table.Td className="font-mono text-sm">applicant_login@gmail.com</Table.Td>
+                        <Table.Td className="font-mono text-sm">applicant_password</Table.Td>
+                    </Table.Tr>
+                    <Table.Tr>
+                        <Table.Td>
+                            <Badge leftSection={<IconBuilding size={12} />} color="green" variant="light">
+                                Employer
+                            </Badge>
+                        </Table.Td>
+                        <Table.Td className="font-mono text-sm">employer_login@gmail.com</Table.Td>
+                        <Table.Td className="font-mono text-sm">employer_password</Table.Td>
+                    </Table.Tr>
+                </Table.Tbody>
+            </Table>
+        </Paper>
+
         <div className="text-2xl font-semibold">Login</div>
         <TextInput value={data.email} error={formError.email} name="email" onChange={handleChange} leftSection={<IconAt size={16} />} label="Email" withAsterisk placeholder="Your email" />
         <PasswordInput value={data.password} error={formError.password} name="password" onChange={handleChange} leftSection={<IconLock size={16} />} label="Password" withAsterisk placeholder="Password" />
