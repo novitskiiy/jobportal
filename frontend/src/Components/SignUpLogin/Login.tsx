@@ -78,7 +78,7 @@ const Login = () => {
                             </Badge>
                         </Table.Td>
                         <Table.Td className="font-mono text-sm">applicant_login@gmail.com</Table.Td>
-                        <Table.Td className="font-mono text-sm">applicant_password</Table.Td>
+                        <Table.Td className="font-mono text-sm">Applicant1!</Table.Td>
                     </Table.Tr>
                     <Table.Tr>
                         <Table.Td>
@@ -87,7 +87,7 @@ const Login = () => {
                             </Badge>
                         </Table.Td>
                         <Table.Td className="font-mono text-sm">employer_login@gmail.com</Table.Td>
-                        <Table.Td className="font-mono text-sm">employer_password</Table.Td>
+                        <Table.Td className="font-mono text-sm">Employer1!</Table.Td>
                     </Table.Tr>
                 </Table.Tbody>
             </Table>
