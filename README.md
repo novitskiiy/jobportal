@@ -2,6 +2,8 @@
 
 A full-stack job portal application built with Spring Boot, React, and MongoDB. Features AI-powered job description generation, real-time notifications, and a modern user interface. Leverages Docker for containerization, Redis for caching, Kafka for message streaming, and Spring Security for robust authentication and authorization.
 
+https://www.youtube.com/watch?v=QFpzLxw5aZo
+
 ## 🛠 Built With
 
 ### Backend Technologies
